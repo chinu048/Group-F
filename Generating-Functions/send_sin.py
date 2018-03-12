@@ -1,6 +1,11 @@
+import visa
+import math
+import time
+import matplotlib.pyplot as plt
+
 # phase in radians
-def sin(amplitude ,freq ,time_duration , phase):
-    pi = math.pi
+pi = math.pi
+def sin(keithley ,amplitude ,freq ,time_duration , phase):
     w = 2* pi *freq  #frequency
     X,Y=[],[]
 
