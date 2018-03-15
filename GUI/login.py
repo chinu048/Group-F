@@ -16,9 +16,45 @@ except AttributeError:
     def _translate(context, text, disambig):
         return QtGui.QApplication.translate(context, text, disambig)
 
-class Ui_Dialog(object):
+class Ui_login(object):
+############
+    def showMessageBox(self,title,message):
+        msgBox = QtGui.QMessageBox()
+        msgBox.setIcon(QtGui.QMessageBox.Warning)
+        msgBox.setWindowTitle(title)
+        msgBox.setText(message)
+        msgBox.setStandardButtons(QtGui.QMessageBox.Ok)
+        msgBox.exec_()
+    def welcomeWindowShow(self):
+        self.welcomeWindow = QtGui.QMainWindow()
+        self.ui = Ui_MainWindow()
+        self.ui.setupUi(self.welcomeWindow)
+        self.welcomeWindow.show()
+    def signUpShow(self):
+        self.signUpWindow = QtGui.QDialog()
+        self.ui = Ui_signUp()
+        self.ui.setupUi(self.signUpWindow)
+        self.signUpWindow.show()
+        # Dialog.close()
 
+    def loginCheck(self):
+        username = self.uname_lineEdit.text()
+        password = self.pass_lineEdit.text()
 
+        connection = sqlite3.connect("login.db")
+        result = connection.execute("SELECT * FROM USERS WHERE USERNAME = ? AND PASSWORD = ?",(str(username),str(password)))
+        if(len(result.fetchall()) > 0):
+            print("User Found ! ")
+            self.welcomeWindowShow()
+        else:
+            print("User Not Found !")
+            self.showMessageBox('Warning','Invalid Username And Password')
+        connection.close()
+
+    def signUpCheck(self):
+        print(" Sign Up Button Clicked !")
+        self.signUpShow()
+    #######
     def setupUi(self, Dialog):
         Dialog.setObjectName(_fromUtf8("Dialog"))
         Dialog.resize(496, 265)
@@ -43,19 +79,21 @@ class Ui_Dialog(object):
         self.uname_lineEdit.setObjectName(_fromUtf8("uname_lineEdit"))
         self.pass_lineEdit = QtGui.QLineEdit(Dialog)
         self.pass_lineEdit.setGeometry(QtCore.QRect(230, 150, 113, 20))
-
-
-
+#######
+        self.pass_lineEdit.setObjectName(_fromUtf8("pass_lineEdit"))
+######
         self.login_btn = QtGui.QPushButton(Dialog)
         self.login_btn.setGeometry(QtCore.QRect(230, 200, 51, 23))
         self.login_btn.setObjectName(_fromUtf8("login_btn"))
-
-
+        ######################### Button Event ##############################3
+        self.login_btn.clicked.connect(self.loginCheck)
+        #####################################################################
         self.signup_btn = QtGui.QPushButton(Dialog)
         self.signup_btn.setGeometry(QtCore.QRect(290, 200, 51, 23))
         self.signup_btn.setObjectName(_fromUtf8("signup_btn"))
-
-
+        ######################### Button Event ##############################3
+        self.signup_btn.clicked.connect(self.signUpCheck)
+        #####################################################################
         self.label = QtGui.QLabel(Dialog)
         self.label.setGeometry(QtCore.QRect(190, 10, 211, 51))
         font = QtGui.QFont()
@@ -79,7 +117,7 @@ if __name__ == "__main__":
     import sys
     app = QtGui.QApplication(sys.argv)
     Dialog = QtGui.QDialog()
-    ui = Ui_Dialog()
+    ui = Ui_login()
     ui.setupUi(Dialog)
     Dialog.show()
     sys.exit(app.exec_())
