@@ -1,6 +1,8 @@
 from PyQt4 import QtCore, QtGui
-from welcome import Ui_MainWindow
+from welcome import Ui_WelcomeWindow
 from signup import Ui_signUp
+from Main import Ui_MainWindow
+
 import sqlite3
 try:
     _fromUtf8 = QtCore.QString.fromUtf8

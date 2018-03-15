@@ -1,7 +1,4 @@
 #define LED 13
-int onTime = 2000;
-int offTime = 1000;
-
 
 void setup() {
     pinMode(LED, OUTPUT);
@@ -9,12 +6,15 @@ void setup() {
 }
 
 void loop() {
-    while (Serial.available() == 0){}
-    int intensity = Serial.read();
-    Serial.println(intensity);
-    digitalWrite(LED,HIGH);
-    delay(onTime);
-    digitalWrite(LED,LOW);
-    delay(offTime);
-    
+    if (Serial.available()) {
+        int intensity = Serial.read();
+        if(intensity == '1'){
+        digitalWrite(LED,HIGH);
+        }
+        else{
+        digitalWrite(LED,LOW);
+        }
+    }
 }
+
+
