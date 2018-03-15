@@ -1,5 +1,5 @@
-
 from PyQt4 import QtCore, QtGui
+# from login import Ui_login
 import sqlite3
 try:
     _fromUtf8 = QtCore.QString.fromUtf8
@@ -16,15 +16,20 @@ except AttributeError:
         return QtGui.QApplication.translate(context, text, disambig)
 
 class Ui_signUp(object):
-    def insertData(self):
+
+
+
+    def insertData(self,Dialog):
         username = self.uname_lineEdit.text()
         email = self.email_lineEdit.text()
         password = self.password_lineEdit.text()
 
+        print(str(username),str(email),str(password))
         connection  = sqlite3.connect("login.db")
-        connection.execute("INSERT INTO USERS VALUES(?,?,?)",(username,email,password))
+        connection.execute("INSERT INTO USERS VALUES(?,?,?)",(str(username),str(email),str(password)))
         connection.commit()
         connection.close()
+        # Dialog.close()
 
 
 
@@ -61,7 +66,9 @@ class Ui_signUp(object):
         self.signup_btn = QtGui.QPushButton(Dialog)
         self.signup_btn.setGeometry(QtCore.QRect(270, 290, 75, 23))
         self.signup_btn.setObjectName(_fromUtf8("signup_btn"))
-
+        ########################### Event #############################3
+        self.signup_btn.clicked.connect(self.insertData)
+        ################################################################
         self.label_4 = QtGui.QLabel(Dialog)
         self.label_4.setGeometry(QtCore.QRect(150, 10, 321, 81))
         font = QtGui.QFont()
