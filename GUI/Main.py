@@ -8,18 +8,19 @@ import os
 import math
 import time
 from PyQt4 import QtCore, QtGui
-
-# import pyexcel as pe
-# print(sys.path,len(sys.path))
-
-import visa
-rm = visa.ResourceManager()
-###keithley = rm.open_resource("GPIB0::20::INSTR")
-
 sys.path.append(os.path.dirname(os.getcwd()) + "/Generating-Functions" )
-import send_sin
-import send_cos
-import send_constant
+sys.path.append(os.path.dirname(os.getcwd()) + "/csv_download" )
+sys.path.append(os.path.dirname(os.getcwd()) + "/Set-UP" )
+sys.path.append(os.path.dirname(os.getcwd()) + "/Arduino" )
+# from set_connection import *
+import set_connection
+# import visa
+# rm = visa.ResourceManager()
+# keithley = rm.open_resource("GPIB0::20::INSTR")
+
+# import send_sin
+# import send_cos
+# import send_constant
 
 amplitude=10
 freq=10
@@ -30,22 +31,18 @@ phase=0
 ###send_cos.cos(keithley,amplitude ,freq ,time_duration , phase)
 ###send_constant.constant(keithley,amplitude,time_duration)
 
-sys.path.append(os.path.dirname(os.getcwd()) + "/Set-UP" )
-#import set_connection
 
 # check = set_connection.setup()
 # set_connection.reset()
 # set_connection.output()
 
-sys.path.append(os.path.dirname(os.getcwd()) + "/csv_download" )
 import generate
 ###data=[1,2],[2,3]
 ###save_path = '/home/akash/Desktop'
 ###generate.save(data,save_path)
 ###
 
-sys.path.append(os.path.dirname(os.getcwd()) + "/Arduino" )
-import arduino
+# import arduino
 
 
 # -*- coding: utf-8 -*-
@@ -73,11 +70,67 @@ except AttributeError:
         return QtGui.QApplication.translate(context, text, disambig)
 
 class Ui_MainWindow(object):
+###
+    import set_connection
+    import send_constant
+    import send_sin
+    import send_cos
+
     def ardf_apply(self):
         ontime = int( self.lineEdit_2.text() )
         offtime = int( self.lineEdit_4.text() )
         totaltime = int( self.lineEdit_3.text() )
         arduino.ard(ontime,offtime,totaltime)
+###
+
+
+##### Setup connection GUI --> linked to start button
+    def showMessageBox(self,title,message):
+        msgBox = QtGui.QMessageBox()
+        msgBox.setIcon(QtGui.QMessageBox.Warning)
+        msgBox.setWindowTitle(title)
+        msgBox.setText(message)
+        msgBox.setStandardButtons(QtGui.QMessageBox.Ok)
+        msgBox.exec_()
+    #
+    # def isIncompleteSetup():
+    #     import set_connection
+    #     state = set_connection.setup()
+    #     if state:
+    #         return 0
+    #     return 1
+
+
+
+
+    def setConn(self):
+        # import visa
+        # import set_connection
+        state = set_connection.setup()
+        if state:
+            self.showMessageBox('Greetings',"Already a Successful Setup")
+            return
+
+        state = set_connection.setup()
+        if state:
+            # rm = visa.ResourceManager()
+            # keithley = rm.open_resource("GPIB0::20::INSTR")
+            self.showMessageBox('Greetings',"Successful Setup")
+        else:
+            self.showMessageBox('Greetings',"Unsuccessful Setup")
+
+
+
+
+        def send_volt():
+            rm = visa.ResourceManager()
+            keithley = rm.open_resource("GPIB0::20::INSTR")
+            send_constant.set_volt(keithley)
+            for
+
+
+#####
+
     def setupUi(self, MainWindow):
         MainWindow.setObjectName(_fromUtf8("MainWindow"))
         MainWindow.resize(805, 616)
@@ -114,6 +167,9 @@ class Ui_MainWindow(object):
         sizePolicy.setHeightForWidth(self.start.sizePolicy().hasHeightForWidth())
         self.start.setSizePolicy(sizePolicy)
         self.start.setObjectName(_fromUtf8("start"))
+#####
+        self.start.clicked.connect(self.setConn)
+#####
 ###
 ###        self.start.clicked.connect(self.f_start)
 ###
@@ -125,6 +181,11 @@ class Ui_MainWindow(object):
         sizePolicy.setHeightForWidth(self.stop.sizePolicy().hasHeightForWidth())
         self.stop.setSizePolicy(sizePolicy)
         self.stop.setObjectName(_fromUtf8("stop"))
+
+#####
+        self.stop.clicked.connect(self.start_exp)
+#####
+
 ###
 ###        self.stop.clicked.connect(self.f_stop)
 ###
