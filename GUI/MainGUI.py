@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file '/home/sandarbh/Desktop/Sourcerer/GUI/mainwindow.ui'
+# Form implementation generated from reading ui file 'mainwindow.ui'
 #
-# Created: Wed Apr  4 01:57:00 2018
+# Created: Wed Apr  4 17:37:54 2018
 #      by: PyQt4 UI code generator 4.10.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -26,7 +26,7 @@ except AttributeError:
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName(_fromUtf8("MainWindow"))
-        MainWindow.resize(1090, 871)
+        MainWindow.resize(1090, 750)
         font = QtGui.QFont()
         font.setFamily(_fromUtf8("KacstTitle"))
         font.setPointSize(12)
@@ -214,14 +214,14 @@ class Ui_MainWindow(object):
 "\n"
 "QScrollBar:horizontal {\n"
 "     border: 1px solid #222222;\n"
-"     background: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0.0 #121212, stop: 0.2 #282828, stop: 1 #484848);\n"
-"     height: 7px;\n"
+"     background: #437ca0;\n"
+"     height: 10px;\n"
 "     margin: 0px 16px 0 16px;\n"
 "}\n"
 "\n"
 "QScrollBar::handle:horizontal\n"
 "{\n"
-"      background: QLinearGradient( x1: 0, y1: 0, x2: 1, y2: 0, stop: 0 #ffa02f, stop: 0.5 #44cf6c, stop: 1 #ffa02f);\n"
+"      background: #e1e8e1;\n"
 "      min-height: 20px;\n"
 "      border-radius: 2px;\n"
 "}\n"
@@ -259,24 +259,25 @@ class Ui_MainWindow(object):
 "\n"
 "QScrollBar:vertical\n"
 "{\n"
-"      background: QLinearGradient( x1: 0, y1: 0, x2: 1, y2: 0, stop: 0.0 #121212, stop: 0.2 #282828, stop: 1 #484848);\n"
-"      width: 7px;\n"
+"      background: #fff;\n"
+"      width: 10px;\n"
 "      margin: 16px 0 16px 0;\n"
-"      border: 1px solid #222222;\n"
+"      border: 1px solid #4988af;\n"
 "}\n"
 "\n"
 "QScrollBar::handle:vertical\n"
 "{\n"
-"      background: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #ffa02f, stop: 0.5 #44cf6c, stop: 1 #ffa02f);\n"
+"    /*437ca0*/\n"
+"      background: #e1e8e1;\n"
 "      min-height: 20px;\n"
 "      border-radius: 2px;\n"
 "}\n"
 "\n"
 "QScrollBar::add-line:vertical\n"
 "{\n"
-"      border: 1px solid #1b1b19;\n"
+"      border: 1px solid #34617c;\n"
 "      border-radius: 2px;\n"
-"      background: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #ffa02f, stop: 1 #44cf6c);\n"
+"      background: #34617c;\n"
 "      height: 14px;\n"
 "      subcontrol-position: bottom;\n"
 "      subcontrol-origin: margin;\n"
@@ -284,9 +285,9 @@ class Ui_MainWindow(object):
 "\n"
 "QScrollBar::sub-line:vertical\n"
 "{\n"
-"      border: 1px solid #1b1b19;\n"
+"      border: 1px solid #34617c;\n"
 "      border-radius: 2px;\n"
-"      background: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #44cf6c, stop: 1 #ffa02f);\n"
+"      background: #34617c;\n"
 "      height: 14px;\n"
 "      subcontrol-position: top;\n"
 "      subcontrol-origin: margin;\n"
@@ -294,10 +295,10 @@ class Ui_MainWindow(object):
 "\n"
 "QScrollBar::up-arrow:vertical, QScrollBar::down-arrow:vertical\n"
 "{\n"
-"      border: 1px solid black;\n"
-"      width: 1px;\n"
-"      height: 1px;\n"
-"      background: white;\n"
+"      border: 1px solid #44cf6c;\n"
+"      width: 2px;\n"
+"      height: 2px;\n"
+"      background: #44cf6c;\n"
 "}\n"
 "\n"
 "\n"
@@ -415,6 +416,10 @@ class Ui_MainWindow(object):
 "  margin-bottom: 3px;\n"
 "}\n"
 "\n"
+"QTabBar:focus{\n"
+"    border: 0px;\n"
+"}\n"
+"\n"
 "QTabWidget::pane {\n"
 "    border: 0px solid #444;\n"
 "    top: 0px;\n"
@@ -495,14 +500,16 @@ class Ui_MainWindow(object):
 "QCheckBox::indicator{\n"
 "    color: #000;\n"
 "    background-color: #f6f8ff;\n"
-"    /*border: 1px solid #b1b1b1;*/\n"
+"    border: 2px solid #4988af;\n"
 "    width: 14px;\n"
 "    height: 14px;\n"
+"    border-radius: 5;\n"
 "}\n"
 "\n"
 "QCheckBox::indicator:hover\n"
 "{\n"
 "    border: 1px solid #44cf6c;\n"
+"border-radius: 5;\n"
 "}\n"
 "\n"
 "QCheckBox:focus{\n"
@@ -538,7 +545,12 @@ class Ui_MainWindow(object):
 "QHeaderView::section:vertical {\n"
 "    padding: 2px;\n"
 "    font-size: 10pt;\n"
-"}"))
+"}\n"
+"\n"
+"QLabel:focus{\n"
+"    border: 0px;\n"
+"}\n"
+""))
         self.centralWidget = QtGui.QWidget(MainWindow)
         self.centralWidget.setStyleSheet(_fromUtf8("background-color:#f6f8ff"))
         self.centralWidget.setObjectName(_fromUtf8("centralWidget"))
@@ -606,7 +618,7 @@ class Ui_MainWindow(object):
         self.pwd.setWhatsThis(_fromUtf8(""))
         self.pwd.setAccessibleName(_fromUtf8(""))
         self.pwd.setStyleSheet(_fromUtf8("border-radius:15;padding-left:10px;"))
-        self.pwd.setInputMethodHints(QtCore.Qt.ImhHiddenText|QtCore.Qt.ImhNoAutoUppercase|QtCore.Qt.ImhNoPredictiveText|QtCore.Qt.ImhSensitiveData)
+        self.pwd.setInputMethodHints(QtCore.Qt.ImhHiddenText|QtCore.Qt.ImhNoAutoUppercase|QtCore.Qt.ImhNoPredictiveText)
         self.pwd.setInputMask(_fromUtf8(""))
         self.pwd.setText(_fromUtf8(""))
         self.pwd.setEchoMode(QtGui.QLineEdit.Password)
@@ -630,11 +642,9 @@ class Ui_MainWindow(object):
         self.goToSignup = QtGui.QLabel(self.login)
         self.goToSignup.setMouseTracking(True)
         self.goToSignup.setFocusPolicy(QtCore.Qt.ClickFocus)
-        self.goToSignup.setToolTipDuration(0)
         self.goToSignup.setObjectName(_fromUtf8("goToSignup"))
         self.formLayout_5.setWidget(5, QtGui.QFormLayout.FieldRole, self.goToSignup)
         self.label_9 = QtGui.QLabel(self.login)
-        self.label_9.setToolTipDuration(0)
         self.label_9.setObjectName(_fromUtf8("label_9"))
         self.formLayout_5.setWidget(7, QtGui.QFormLayout.FieldRole, self.label_9)
         self.horizontalLayout_3.addLayout(self.formLayout_5)
@@ -696,7 +706,7 @@ class Ui_MainWindow(object):
         self.sign_pwd.setWhatsThis(_fromUtf8(""))
         self.sign_pwd.setAccessibleName(_fromUtf8(""))
         self.sign_pwd.setStyleSheet(_fromUtf8("border-radius:15;padding-left:10px;"))
-        self.sign_pwd.setInputMethodHints(QtCore.Qt.ImhHiddenText|QtCore.Qt.ImhNoAutoUppercase|QtCore.Qt.ImhNoPredictiveText|QtCore.Qt.ImhSensitiveData)
+        self.sign_pwd.setInputMethodHints(QtCore.Qt.ImhHiddenText|QtCore.Qt.ImhNoAutoUppercase|QtCore.Qt.ImhNoPredictiveText)
         self.sign_pwd.setInputMask(_fromUtf8(""))
         self.sign_pwd.setText(_fromUtf8(""))
         self.sign_pwd.setEchoMode(QtGui.QLineEdit.Password)
@@ -710,7 +720,7 @@ class Ui_MainWindow(object):
         font.setPointSize(12)
         self.conf_pwd.setFont(font)
         self.conf_pwd.setStyleSheet(_fromUtf8("border-radius:15;padding-left:10px;"))
-        self.conf_pwd.setInputMethodHints(QtCore.Qt.ImhHiddenText|QtCore.Qt.ImhNoAutoUppercase|QtCore.Qt.ImhNoPredictiveText|QtCore.Qt.ImhSensitiveData)
+        self.conf_pwd.setInputMethodHints(QtCore.Qt.ImhHiddenText|QtCore.Qt.ImhNoAutoUppercase|QtCore.Qt.ImhNoPredictiveText)
         self.conf_pwd.setEchoMode(QtGui.QLineEdit.Password)
         self.conf_pwd.setObjectName(_fromUtf8("conf_pwd"))
         self.formLayout_6.setWidget(5, QtGui.QFormLayout.FieldRole, self.conf_pwd)
@@ -738,11 +748,9 @@ class Ui_MainWindow(object):
         self.goToLogin = QtGui.QLabel(self.signup)
         self.goToLogin.setMouseTracking(True)
         self.goToLogin.setFocusPolicy(QtCore.Qt.ClickFocus)
-        self.goToLogin.setToolTipDuration(0)
         self.goToLogin.setObjectName(_fromUtf8("goToLogin"))
         self.formLayout_6.setWidget(8, QtGui.QFormLayout.FieldRole, self.goToLogin)
         self.label_12 = QtGui.QLabel(self.signup)
-        self.label_12.setToolTipDuration(0)
         self.label_12.setObjectName(_fromUtf8("label_12"))
         self.formLayout_6.setWidget(10, QtGui.QFormLayout.FieldRole, self.label_12)
         self.name = QtGui.QLineEdit(self.signup)
@@ -760,7 +768,110 @@ class Ui_MainWindow(object):
         self.Main.setObjectName(_fromUtf8("Main"))
         self.horizontalLayout_4 = QtGui.QHBoxLayout(self.Main)
         self.horizontalLayout_4.setObjectName(_fromUtf8("horizontalLayout_4"))
-        self.tabWidget = QtGui.QTabWidget(self.Main)
+        self.scrollArea = QtGui.QScrollArea(self.Main)
+        self.scrollArea.setStyleSheet(_fromUtf8("QScrollBar:vertical\n"
+"{\n"
+"      background: #fff;\n"
+"      width: 10px;\n"
+"      margin: 16px 0 16px 0;\n"
+"      border: 1px solid #4988af;\n"
+"}\n"
+"\n"
+"QScrollBar::handle:vertical\n"
+"{\n"
+"    /*437ca0*/\n"
+"      background: #e1e8e1;\n"
+"      min-height: 20px;\n"
+"      border-radius: 2px;\n"
+"}\n"
+"\n"
+"QScrollBar::add-line:vertical\n"
+"{\n"
+"      border: 1px solid #34617c;\n"
+"      border-radius: 2px;\n"
+"      background: #34617c;\n"
+"      height: 14px;\n"
+"      subcontrol-position: bottom;\n"
+"      subcontrol-origin: margin;\n"
+"}\n"
+"\n"
+"QScrollBar::sub-line:vertical\n"
+"{\n"
+"      border: 1px solid #34617c;\n"
+"      border-radius: 2px;\n"
+"      background: #34617c;\n"
+"      height: 14px;\n"
+"      subcontrol-position: top;\n"
+"      subcontrol-origin: margin;\n"
+"}\n"
+"\n"
+"QScrollBar::up-arrow:vertical, QScrollBar::down-arrow:vertical\n"
+"{\n"
+"      border: 1px solid #44cf6c;\n"
+"      width: 2px;\n"
+"      height: 2px;\n"
+"      background: #44cf6c;\n"
+"}\n"
+"\n"
+"\n"
+"QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical\n"
+"{\n"
+"      background: none;\n"
+"}\n"
+"\n"
+"QScrollBar:horizontal {\n"
+"     border: 1px solid #4988af;\n"
+"     background: #ffffff;\n"
+"     height: 10px;\n"
+"     margin: 0px 16px 0 16px;\n"
+"}\n"
+"\n"
+"QScrollBar::handle:horizontal\n"
+"{\n"
+"      background: #e1e8e1;\n"
+"      min-height: 20px;\n"
+"      border-radius: 2px;\n"
+"}\n"
+"\n"
+"QScrollBar::add-line:horizontal {\n"
+"      border: 1px solid #34617c;\n"
+"      border-radius: 2px;\n"
+"      background: #34617c;\n"
+"      width: 14px;\n"
+"      subcontrol-position: right;\n"
+"      subcontrol-origin: margin;\n"
+"}\n"
+"\n"
+"QScrollBar::sub-line:horizontal {\n"
+"      border: 1px solid #34617c;\n"
+"      border-radius: 2px;\n"
+"      background: #34617c;\n"
+"      width: 14px;\n"
+"     subcontrol-position: left;\n"
+"     subcontrol-origin: margin;\n"
+"}\n"
+"\n"
+"QScrollBar::right-arrow:horizontal, QScrollBar::left-arrow:horizontal\n"
+"{\n"
+"      border: 1px solid #44cf6c;\n"
+"      width: 2px;\n"
+"      height: 2px;\n"
+"      background: #44cf6c;\n"
+"}\n"
+"\n"
+"QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal\n"
+"{\n"
+"      background: none;\n"
+"}\n"
+""))
+        self.scrollArea.setWidgetResizable(True)
+        self.scrollArea.setObjectName(_fromUtf8("scrollArea"))
+        self.scrollAreaWidgetContents = QtGui.QWidget()
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(-10, 0, 1054, 726))
+        self.scrollAreaWidgetContents.setObjectName(_fromUtf8("scrollAreaWidgetContents"))
+        self.verticalLayout_4 = QtGui.QVBoxLayout(self.scrollAreaWidgetContents)
+        self.verticalLayout_4.setObjectName(_fromUtf8("verticalLayout_4"))
+        self.tabWidget = QtGui.QTabWidget(self.scrollAreaWidgetContents)
         font = QtGui.QFont()
         font.setFamily(_fromUtf8("KacstTitleL"))
         font.setPointSize(12)
@@ -983,6 +1094,8 @@ class Ui_MainWindow(object):
         self.valuesTable.setRowCount(0)
         self.valuesTable.setObjectName(_fromUtf8("valuesTable"))
         self.valuesTable.setColumnCount(4)
+        self.valuesTable.horizontalHeader().setResizeMode(QtGui.QHeaderView.Stretch)
+
         item = QtGui.QTableWidgetItem()
         self.valuesTable.setHorizontalHeaderItem(0, item)
         item = QtGui.QTableWidgetItem()
@@ -1099,20 +1212,36 @@ class Ui_MainWindow(object):
         self.Arduino.setObjectName(_fromUtf8("Arduino"))
         self.gridLayout_3 = QtGui.QGridLayout(self.Arduino)
         self.gridLayout_3.setObjectName(_fromUtf8("gridLayout_3"))
-        spacerItem = QtGui.QSpacerItem(428, 188, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
-        self.gridLayout_3.addItem(spacerItem, 0, 1, 2, 3)
-        spacerItem1 = QtGui.QSpacerItem(278, 628, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
-        self.gridLayout_3.addItem(spacerItem1, 1, 0, 6, 1)
-        spacerItem2 = QtGui.QSpacerItem(358, 374, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
-        self.gridLayout_3.addItem(spacerItem2, 1, 3, 5, 1)
-        self.label_15 = QtGui.QLabel(self.Arduino)
+        self.label_2 = QtGui.QLabel(self.Arduino)
         font = QtGui.QFont()
         font.setFamily(_fromUtf8("KacstTitleL"))
         font.setPointSize(10)
-        self.label_15.setFont(font)
-        self.label_15.setStyleSheet(_fromUtf8("color: #292f36;"))
-        self.label_15.setObjectName(_fromUtf8("label_15"))
-        self.gridLayout_3.addWidget(self.label_15, 2, 1, 1, 1)
+        font.setBold(False)
+        font.setWeight(50)
+        self.label_2.setFont(font)
+        self.label_2.setStyleSheet(_fromUtf8("color: #292f36;"))
+        self.label_2.setObjectName(_fromUtf8("label_2"))
+        self.gridLayout_3.addWidget(self.label_2, 4, 1, 1, 1)
+        self.lineEdit_4 = QtGui.QLineEdit(self.Arduino)
+        font = QtGui.QFont()
+        font.setFamily(_fromUtf8("KacstTitleL"))
+        font.setPointSize(12)
+        self.lineEdit_4.setFont(font)
+        self.lineEdit_4.setStyleSheet(_fromUtf8("margin: 10px;"))
+        self.lineEdit_4.setObjectName(_fromUtf8("lineEdit_4"))
+        self.gridLayout_3.addWidget(self.lineEdit_4, 4, 2, 1, 1)
+        spacerItem = QtGui.QSpacerItem(358, 374, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
+        self.gridLayout_3.addItem(spacerItem, 1, 3, 5, 1)
+        spacerItem1 = QtGui.QSpacerItem(428, 188, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
+        self.gridLayout_3.addItem(spacerItem1, 0, 1, 2, 3)
+        self.lineEdit_2 = QtGui.QLineEdit(self.Arduino)
+        font = QtGui.QFont()
+        font.setFamily(_fromUtf8("KacstTitleL"))
+        font.setPointSize(12)
+        self.lineEdit_2.setFont(font)
+        self.lineEdit_2.setStyleSheet(_fromUtf8("margin: 10px;"))
+        self.lineEdit_2.setObjectName(_fromUtf8("lineEdit_2"))
+        self.gridLayout_3.addWidget(self.lineEdit_2, 3, 2, 1, 1)
         self.lineEdit = QtGui.QLineEdit(self.Arduino)
         font = QtGui.QFont()
         font.setFamily(_fromUtf8("KacstTitleL"))
@@ -1129,14 +1258,14 @@ class Ui_MainWindow(object):
         self.label_16.setStyleSheet(_fromUtf8("color: #292f36;"))
         self.label_16.setObjectName(_fromUtf8("label_16"))
         self.gridLayout_3.addWidget(self.label_16, 3, 1, 1, 1)
-        self.lineEdit_2 = QtGui.QLineEdit(self.Arduino)
+        self.label_15 = QtGui.QLabel(self.Arduino)
         font = QtGui.QFont()
         font.setFamily(_fromUtf8("KacstTitleL"))
-        font.setPointSize(12)
-        self.lineEdit_2.setFont(font)
-        self.lineEdit_2.setStyleSheet(_fromUtf8("margin: 10px;"))
-        self.lineEdit_2.setObjectName(_fromUtf8("lineEdit_2"))
-        self.gridLayout_3.addWidget(self.lineEdit_2, 3, 2, 1, 1)
+        font.setPointSize(10)
+        self.label_15.setFont(font)
+        self.label_15.setStyleSheet(_fromUtf8("color: #292f36;"))
+        self.label_15.setObjectName(_fromUtf8("label_15"))
+        self.gridLayout_3.addWidget(self.label_15, 2, 1, 1, 1)
         self.arduino_start = QtGui.QPushButton(self.Arduino)
         self.arduino_start.setMaximumSize(QtCore.QSize(150, 16777215))
         self.arduino_start.setStyleSheet(_fromUtf8("margin: 10px;\n"
@@ -1144,28 +1273,14 @@ class Ui_MainWindow(object):
 "border-radius: 5;"))
         self.arduino_start.setObjectName(_fromUtf8("arduino_start"))
         self.gridLayout_3.addWidget(self.arduino_start, 5, 2, 1, 1)
+        spacerItem2 = QtGui.QSpacerItem(278, 628, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
+        self.gridLayout_3.addItem(spacerItem2, 1, 0, 6, 1)
         spacerItem3 = QtGui.QSpacerItem(428, 252, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
         self.gridLayout_3.addItem(spacerItem3, 6, 1, 1, 3)
-        self.lineEdit_4 = QtGui.QLineEdit(self.Arduino)
-        font = QtGui.QFont()
-        font.setFamily(_fromUtf8("KacstTitleL"))
-        font.setPointSize(12)
-        self.lineEdit_4.setFont(font)
-        self.lineEdit_4.setStyleSheet(_fromUtf8("margin: 10px;"))
-        self.lineEdit_4.setObjectName(_fromUtf8("lineEdit_4"))
-        self.gridLayout_3.addWidget(self.lineEdit_4, 4, 2, 1, 1)
-        self.label_2 = QtGui.QLabel(self.Arduino)
-        font = QtGui.QFont()
-        font.setFamily(_fromUtf8("KacstTitleL"))
-        font.setPointSize(10)
-        font.setBold(False)
-        font.setWeight(50)
-        self.label_2.setFont(font)
-        self.label_2.setStyleSheet(_fromUtf8("color: #292f36;"))
-        self.label_2.setObjectName(_fromUtf8("label_2"))
-        self.gridLayout_3.addWidget(self.label_2, 4, 1, 1, 1)
         self.tabWidget.addTab(self.Arduino, _fromUtf8(""))
-        self.horizontalLayout_4.addWidget(self.tabWidget)
+        self.verticalLayout_4.addWidget(self.tabWidget)
+        self.scrollArea.setWidget(self.scrollAreaWidgetContents)
+        self.horizontalLayout_4.addWidget(self.scrollArea)
         self.stackedWidget.addWidget(self.Main)
         self.horizontalLayout.addWidget(self.stackedWidget)
         MainWindow.setCentralWidget(self.centralWidget)
@@ -1178,9 +1293,9 @@ class Ui_MainWindow(object):
         MainWindow.setStatusBar(self.statusBar)
 
         self.retranslateUi(MainWindow)
-        self.stackedWidget.setCurrentIndex(2)
+        self.stackedWidget.setCurrentIndex(0)
         self.tabWidget.setCurrentIndex(0)
-        self.voltage_input.setCurrentIndex(1)
+        self.voltage_input.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
@@ -1232,11 +1347,11 @@ class Ui_MainWindow(object):
         self.label_4.setText(_translate("MainWindow", "Y-Axis :", None))
         self.plot_graph.setText(_translate("MainWindow", "Plot Graph", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.Graph), _translate("MainWindow", "Graph", None))
-        self.label_15.setText(_translate("MainWindow", "Start Voltage : ", None))
-        self.label_16.setText(_translate("MainWindow", "Stop Voltage : ", None))
-        self.arduino_start.setText(_translate("MainWindow", "START", None))
         self.label_2.setText(_translate("MainWindow", "Duration : ", None))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.Arduino), _translate("MainWindow", "Arduino", None))
+        self.label_16.setText(_translate("MainWindow", "Off Time : ", None))
+        self.label_15.setText(_translate("MainWindow", "On Time : ", None))
+        self.arduino_start.setText(_translate("MainWindow", "START", None))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.Arduino), _translate("MainWindow", "LED", None))
 
 import resources_rc
 
