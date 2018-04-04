@@ -8,6 +8,12 @@
 # WARNING! All changes made in this file will be lost!
 
 from PyQt4 import QtCore, QtGui
+import sqlite3
+db = sqlite3.connect("SoftwareProject.db")
+cur = db.cursor()
+cur.execute("create table if not exists User (userid varchar(30),name varchar(30),password varchar(20),email varchar(40));")
+
+
 
 try:
     _fromUtf8 = QtCore.QString.fromUtf8
@@ -17,11 +23,14 @@ except AttributeError:
 
 try:
     _encoding = QtGui.QApplication.UnicodeUTF8
+
+
     def _translate(context, text, disambig):
         return QtGui.QApplication.translate(context, text, disambig, _encoding)
 except AttributeError:
     def _translate(context, text, disambig):
         return QtGui.QApplication.translate(context, text, disambig)
+
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -34,523 +43,523 @@ class Ui_MainWindow(object):
         font.setWeight(75)
         MainWindow.setFont(font)
         MainWindow.setStyleSheet(_fromUtf8("ToolTip\n"
-"{\n"
-"     border: 1px solid black;\n"
-"     background-color: #ffa02f;\n"
-"     padding: 1px;\n"
-"     border-radius: 3px;\n"
-"     opacity: 100;\n"
-"}\n"
-"\n"
-"/*Primary (Blue) : #4988af\n"
-"Ghost White : #f6f8ff\n"
-"Secondary(Green) : #44cf6c*/\n"
-"\n"
-"QWidget\n"
-"{\n"
-"    color: #b1b1b1;\n"
-"    background-color:#f6f8ff;\n"
-"  border-radius: 10;\n"
-"}\n"
-"\n"
-"QWidget:item:hover\n"
-"{\n"
-"    background-color: #44cf6c;\n"
-"    color: #000000;\n"
-"}\n"
-"\n"
-"QWidget:item:selected\n"
-"{\n"
-"    background-color: #44cf6c;\n"
-"}\n"
-"\n"
-"QMenuBar::item\n"
-"{\n"
-"    background: transparent;\n"
-"}\n"
-"\n"
-"QMenuBar::item:selected\n"
-"{\n"
-"    background: transparent;\n"
-"    border: 1px solid #44cf6c;\n"
-"}\n"
-"\n"
-"QMenuBar::item:pressed\n"
-"{\n"
-"    background: #444;\n"
-"    border: 1px solid #000;\n"
-"    background-color: QLinearGradient(\n"
-"        x1:0, y1:0,\n"
-"        x2:0, y2:1,\n"
-"        stop:1 #212121,\n"
-"        stop:0.4 #343434/*,\n"
-"        stop:0.2 #343434,\n"
-"        stop:0.1 #44cf6c*/\n"
-"    );\n"
-"    margin-bottom:-1px;\n"
-"    padding-bottom:1px;\n"
-"}\n"
-"\n"
-"QMenu\n"
-"{\n"
-"    border: 1px solid #000;\n"
-"}\n"
-"\n"
-"QMenu::item\n"
-"{\n"
-"    padding: 2px 20px 2px 20px;\n"
-"}\n"
-"\n"
-"QMenu::item:selected\n"
-"{\n"
-"    color: #000000;\n"
-"}\n"
-"\n"
-"QWidget:disabled\n"
-"{\n"
-"    color: #404040;\n"
-"    background-color: #323232;\n"
-"}\n"
-"\n"
-"QAbstractItemView\n"
-"{\n"
-"    background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #4d4d4d, stop: 0.1 #646464, stop: 1 #5d5d5d);\n"
-"}\n"
-"\n"
-"QWidget:focus\n"
-"{\n"
-"    border: 2px solid #44cf6c;\n"
-"}\n"
-"\n"
-"QLineEdit\n"
-"{\n"
-"  color:#323232;\n"
-"    background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #4d4d4d, stop: 0 #646464, stop: 1 #5d5d5d);\n"
-"    padding: 5px;\n"
-"    border-style: solid;\n"
-"    border: 1px solid #4988af;\n"
-"  border-radius:15;\n"
-"  padding-left:10px;\n"
-"}\n"
-"\n"
-"QPushButton\n"
-"{\n"
-"    color: #f6f8ff;\n"
-"  background-color: #4988af;\n"
-"    border-width: 1px;\n"
-"    border-color: #4988af;\n"
-"    border-style: solid;\n"
-"    border-radius: 15;\n"
-"    padding: 5px;\n"
-"    font-size: 20px;\n"
-"    padding-left: 5px;\n"
-"    padding-right: 5px;\n"
-"  width: 100px;\n"
-"  margin-top:10px;\n"
-"  \n"
-"}\n"
-"\n"
-"QPushButton:pressed\n"
-"{\n"
-"    background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #2d2d2d, stop: 0.1 #2b2b2b, stop: 0.5 #292929, stop: 0.9 #282828, stop: 1 #252525);\n"
-"}\n"
-"\n"
-"QComboBox\n"
-"{\n"
-"    selection-background-color: #44cf6c;\n"
-"    background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #565656, stop: 0.1 #525252, stop: 0.5 #4e4e4e, stop: 0.9 #4a4a4a, stop: 1 #464646);\n"
-"    border-style: solid;\n"
-"    border: 1px solid #1e1e1e;\n"
-"    border-radius: 5;\n"
-"}\n"
-"\n"
-"QComboBox:hover,QPushButton:hover\n"
-"{\n"
-"    border: 2px solid QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #44cf6c, stop: 1 #44cf6c);\n"
-"}\n"
-"\n"
-"\n"
-"QComboBox:on\n"
-"{\n"
-"    padding-top: 3px;\n"
-"    padding-left: 4px;\n"
-"    background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #2d2d2d, stop: 0.1 #2b2b2b, stop: 0.5 #292929, stop: 0.9 #282828, stop: 1 #252525);\n"
-"    selection-background-color: #44cf6c;\n"
-"}\n"
-"\n"
-"QComboBox QAbstractItemView\n"
-"{\n"
-"    border: 2px solid darkgray;\n"
-"    selection-background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #ffa02f, stop: 1 #44cf6c);\n"
-"}\n"
-"\n"
-"QComboBox::drop-down\n"
-"{\n"
-"     subcontrol-origin: padding;\n"
-"     subcontrol-position: top right;\n"
-"     width: 15px;\n"
-"\n"
-"     border-left-width: 0px;\n"
-"     border-left-color: darkgray;\n"
-"     border-left-style: solid; /* just a single line */\n"
-"     border-top-right-radius: 3px; /* same radius as the QComboBox */\n"
-"     border-bottom-right-radius: 3px;\n"
-" }\n"
-"\n"
-"QComboBox::down-arrow\n"
-"{\n"
-"     image: url(:/down_arrow.png);\n"
-"}\n"
-"\n"
-"QGroupBox:focus\n"
-"{\n"
-"border: 2px solid QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #44cf6c, stop: 1 #44cf6c);\n"
-"}\n"
-"\n"
-"QTextEdit:focus\n"
-"{\n"
-"    border: 2px solid QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #44cf6c, stop: 1 #44cf6c);\n"
-"}\n"
-"\n"
-"QScrollBar:horizontal {\n"
-"     border: 1px solid #222222;\n"
-"     background: #437ca0;\n"
-"     height: 10px;\n"
-"     margin: 0px 16px 0 16px;\n"
-"}\n"
-"\n"
-"QScrollBar::handle:horizontal\n"
-"{\n"
-"      background: #e1e8e1;\n"
-"      min-height: 20px;\n"
-"      border-radius: 2px;\n"
-"}\n"
-"\n"
-"QScrollBar::add-line:horizontal {\n"
-"      border: 1px solid #1b1b19;\n"
-"      border-radius: 2px;\n"
-"      background: QLinearGradient( x1: 0, y1: 0, x2: 1, y2: 0, stop: 0 #ffa02f, stop: 1 #44cf6c);\n"
-"      width: 14px;\n"
-"      subcontrol-position: right;\n"
-"      subcontrol-origin: margin;\n"
-"}\n"
-"\n"
-"QScrollBar::sub-line:horizontal {\n"
-"      border: 1px solid #1b1b19;\n"
-"      border-radius: 2px;\n"
-"      background: QLinearGradient( x1: 0, y1: 0, x2: 1, y2: 0, stop: 0 #ffa02f, stop: 1 #44cf6c);\n"
-"      width: 14px;\n"
-"     subcontrol-position: left;\n"
-"     subcontrol-origin: margin;\n"
-"}\n"
-"\n"
-"QScrollBar::right-arrow:horizontal, QScrollBar::left-arrow:horizontal\n"
-"{\n"
-"      border: 1px solid black;\n"
-"      width: 1px;\n"
-"      height: 1px;\n"
-"      background: white;\n"
-"}\n"
-"\n"
-"QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal\n"
-"{\n"
-"      background: none;\n"
-"}\n"
-"\n"
-"QScrollBar:vertical\n"
-"{\n"
-"      background: #fff;\n"
-"      width: 10px;\n"
-"      margin: 16px 0 16px 0;\n"
-"      border: 1px solid #4988af;\n"
-"}\n"
-"\n"
-"QScrollBar::handle:vertical\n"
-"{\n"
-"    /*437ca0*/\n"
-"      background: #e1e8e1;\n"
-"      min-height: 20px;\n"
-"      border-radius: 2px;\n"
-"}\n"
-"\n"
-"QScrollBar::add-line:vertical\n"
-"{\n"
-"      border: 1px solid #34617c;\n"
-"      border-radius: 2px;\n"
-"      background: #34617c;\n"
-"      height: 14px;\n"
-"      subcontrol-position: bottom;\n"
-"      subcontrol-origin: margin;\n"
-"}\n"
-"\n"
-"QScrollBar::sub-line:vertical\n"
-"{\n"
-"      border: 1px solid #34617c;\n"
-"      border-radius: 2px;\n"
-"      background: #34617c;\n"
-"      height: 14px;\n"
-"      subcontrol-position: top;\n"
-"      subcontrol-origin: margin;\n"
-"}\n"
-"\n"
-"QScrollBar::up-arrow:vertical, QScrollBar::down-arrow:vertical\n"
-"{\n"
-"      border: 1px solid #44cf6c;\n"
-"      width: 2px;\n"
-"      height: 2px;\n"
-"      background: #44cf6c;\n"
-"}\n"
-"\n"
-"\n"
-"QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical\n"
-"{\n"
-"      background: none;\n"
-"}\n"
-"\n"
-"QTextEdit\n"
-"{\n"
-"    background-color: #242424;\n"
-"}\n"
-"\n"
-"QPlainTextEdit\n"
-"{\n"
-"    background-color: #242424;\n"
-"}\n"
-"\n"
-"/*QHeaderView::section\n"
-"{\n"
-"    background-color: QLinearGradient(x1:0, y1:0, x2:0, y2:1, stop:0 #616161, stop: 0.5 #505050, stop: 0.6 #434343, stop:1 #656565);\n"
-"    color: white;\n"
-"    padding-left: 4px;\n"
-"    border: 1px solid #6c6c6c;\n"
-"}*/\n"
-"\n"
-"QCheckBox:disabled\n"
-"{\n"
-"color: #414141;\n"
-"}\n"
-"\n"
-"QDockWidget::title\n"
-"{\n"
-"    text-align: center;\n"
-"    spacing: 3px; /* spacing between items in the tool bar */\n"
-"    background-color: QLinearGradient(x1:0, y1:0, x2:0, y2:1, stop:0 #323232, stop: 0.5 #242424, stop:1 #323232);\n"
-"}\n"
-"\n"
-"QDockWidget::close-button, QDockWidget::float-button\n"
-"{\n"
-"    text-align: center;\n"
-"    spacing: 1px; /* spacing between items in the tool bar */\n"
-"    background-color: QLinearGradient(x1:0, y1:0, x2:0, y2:1, stop:0 #323232, stop: 0.5 #242424, stop:1 #323232);\n"
-"}\n"
-"\n"
-"QDockWidget::close-button:hover, QDockWidget::float-button:hover\n"
-"{\n"
-"    background: #242424;\n"
-"}\n"
-"\n"
-"QDockWidget::close-button:pressed, QDockWidget::float-button:pressed\n"
-"{\n"
-"    padding: 1px -1px -1px 1px;\n"
-"}\n"
-"\n"
-"QMainWindow::separator\n"
-"{\n"
-"    background-color: QLinearGradient(x1:0, y1:0, x2:0, y2:1, stop:0 #161616, stop: 0.5 #151515, stop: 0.6 #212121, stop:1 #343434);\n"
-"    color: white;\n"
-"    padding-left: 4px;\n"
-"    border: 1px solid #4c4c4c;\n"
-"    spacing: 3px; /* spacing between items in the tool bar */\n"
-"}\n"
-"\n"
-"QMainWindow::separator:hover\n"
-"{\n"
-"\n"
-"    background-color: QLinearGradient(x1:0, y1:0, x2:0, y2:1, stop:0 #44cf6c, stop:0.5 #b56c17 stop:1 #ffa02f);\n"
-"    color: white;\n"
-"    padding-left: 4px;\n"
-"    border: 1px solid #6c6c6c;\n"
-"    spacing: 3px; /* spacing between items in the tool bar */\n"
-"}\n"
-"\n"
-"QToolBar::handle\n"
-"{\n"
-"     spacing: 3px; /* spacing between items in the tool bar */\n"
-"     background: url(:/images/handle.png);\n"
-"}\n"
-"\n"
-"QMenu::separator\n"
-"{\n"
-"    height: 2px;\n"
-"    background-color: QLinearGradient(x1:0, y1:0, x2:0, y2:1, stop:0 #161616, stop: 0.5 #151515, stop: 0.6 #212121, stop:1 #343434);\n"
-"    color: white;\n"
-"    padding-left: 4px;\n"
-"    margin-left: 10px;\n"
-"    margin-right: 5px;\n"
-"}\n"
-"\n"
-"QProgressBar\n"
-"{\n"
-"    border: 2px solid grey;\n"
-"    border-radius: 5px;\n"
-"    text-align: center;\n"
-"}\n"
-"\n"
-"QProgressBar::chunk\n"
-"{\n"
-"    background-color: #44cf6c;\n"
-"    width: 2.15px;\n"
-"    margin: 0.5px;\n"
-"}\n"
-"\n"
-"QTabBar::tab {\n"
-"    color: #4988af;\n"
-"    border: 0px solid #444;\n"
-"    /*border-bottom-style: none;*/\n"
-"    background-color: #f6f8ff;\n"
-"    padding-left: 30px;\n"
-"    padding-right: 30px;\n"
-"    padding-top: 10px;\n"
-"    padding-bottom: 5px;\n"
-"    margin-right: 1px;\n"
-"  margin-bottom: 3px;\n"
-"}\n"
-"\n"
-"QTabBar:focus{\n"
-"    border: 0px;\n"
-"}\n"
-"\n"
-"QTabWidget::pane {\n"
-"    border: 0px solid #444;\n"
-"    top: 0px;\n"
-"}\n"
-"\n"
-"QTabBar::tab:last\n"
-"{\n"
-"    margin-right: 0; /* the last selected tab has nothing to overlap with on the right */\n"
-"    border-top-right-radius: 5px;\n"
-"}\n"
-"\n"
-"QTabBar::tab:first:!selected\n"
-"{\n"
-" margin-left: 0px; /* the last selected tab has nothing to overlap with on the right */\n"
-"\n"
-"\n"
-"    border-top-left-radius: 5px;\n"
-"}\n"
-"\n"
-"QTabBar::tab:!selected\n"
-"{\n"
-"    color: #f6f8ff;\n"
-"    border-bottom-style: solid;\n"
-"    margin-top: 3px;\n"
-"    background-color: #4988af;\n"
-"}\n"
-"\n"
-"QTabBar::tab:selected\n"
-"{\n"
-"    border-top-left-radius: 3px;\n"
-"    border-top-right-radius: 3px;\n"
-"    margin-bottom: 0px;\n"
-"  background-color: #e1e8e1;\n"
-"  color: #4988af;\n"
-"}\n"
-"\n"
-"QTabBar::tab:!selected:hover\n"
-"{\n"
-"    /*border-top: 2px solid #44cf6c;\n"
-"    padding-bottom: 3px;\n"
-"  #edff7a\n"
-"  #ffd23f\n"
-"  #f46036*/\n"
-"    border-top-left-radius: 3px;\n"
-"    border-top-right-radius: 3px;\n"
-"    background-color: #44cf6c;\n"
-"  color: #274690;\n"
-"}\n"
-"\n"
-"QRadioButton::indicator:checked, QRadioButton::indicator:unchecked{\n"
-"    color: #44cf6c;\n"
-"    background-color: #f6f8ff;\n"
-"    border: 2px solid #4988af;\n"
-"    border-radius: 6px;\n"
-"  padding : 15px;\n"
-"}\n"
-"\n"
-"QRadioButton:focus{\n"
-"    border: 0px;\n"
-"}\n"
-"\n"
-"QRadioButton::indicator:checked\n"
-"{\n"
-"    background-color: #44cf6c;\n"
-"  border-radius: 6px;\n"
-"  padding : 20px;\n"
-"}\n"
-"\n"
-"QRadioButton::indicator\n"
-"{\n"
-"    border-radius: 1px solid #4988af;\n"
-"}\n"
-"\n"
-"QRadioButton::indicator:hover{\n"
-"  border: 1px solid #44cf6c;\n"
-"}\n"
-"\n"
-"QCheckBox::indicator{\n"
-"    color: #000;\n"
-"    background-color: #f6f8ff;\n"
-"    border: 2px solid #4988af;\n"
-"    width: 14px;\n"
-"    height: 14px;\n"
-"    border-radius: 5;\n"
-"}\n"
-"\n"
-"QCheckBox::indicator:hover\n"
-"{\n"
-"    border: 1px solid #44cf6c;\n"
-"border-radius: 5;\n"
-"}\n"
-"\n"
-"QCheckBox:focus{\n"
-"    border: 0px;\n"
-"}\n"
-"\n"
-"\n"
-"QCheckBox::indicator:checked\n"
-"{\n"
-"    image:url(:/images/images/checkbox.png);\n"
-"}\n"
-"\n"
-"QCheckBox::indicator:disabled, QRadioButton::indicator:disabled\n"
-"{\n"
-"    border: 1px solid #444;\n"
-"}\n"
-"QMainWindow{\n"
-"\n"
-"  background-color:#f6f8ff;\n"
-"  margin:0px;\n"
-"}\n"
-"\n"
-"QHeaderView::section {\n"
-"    color: #f6f8ff;\n"
-"    background-color: #4988af;\n"
-"      border: 1px solid #fffff8;\n"
-"}\n"
-"QHeaderView::section:horizontal {\n"
-"    padding: 4px;\n"
-"    font-size: 12pt;\n"
-"}\n"
-"\n"
-"QHeaderView::section:vertical {\n"
-"    padding: 2px;\n"
-"    font-size: 10pt;\n"
-"}\n"
-"\n"
-"QLabel:focus{\n"
-"    border: 0px;\n"
-"}\n"
-""))
+                                           "{\n"
+                                           "     border: 1px solid black;\n"
+                                           "     background-color: #ffa02f;\n"
+                                           "     padding: 1px;\n"
+                                           "     border-radius: 3px;\n"
+                                           "     opacity: 100;\n"
+                                           "}\n"
+                                           "\n"
+                                           "/*Primary (Blue) : #4988af\n"
+                                           "Ghost White : #f6f8ff\n"
+                                           "Secondary(Green) : #44cf6c*/\n"
+                                           "\n"
+                                           "QWidget\n"
+                                           "{\n"
+                                           "    color: #b1b1b1;\n"
+                                           "    background-color:#f6f8ff;\n"
+                                           "  border-radius: 10;\n"
+                                           "}\n"
+                                           "\n"
+                                           "QWidget:item:hover\n"
+                                           "{\n"
+                                           "    background-color: #44cf6c;\n"
+                                           "    color: #000000;\n"
+                                           "}\n"
+                                           "\n"
+                                           "QWidget:item:selected\n"
+                                           "{\n"
+                                           "    background-color: #44cf6c;\n"
+                                           "}\n"
+                                           "\n"
+                                           "QMenuBar::item\n"
+                                           "{\n"
+                                           "    background: transparent;\n"
+                                           "}\n"
+                                           "\n"
+                                           "QMenuBar::item:selected\n"
+                                           "{\n"
+                                           "    background: transparent;\n"
+                                           "    border: 1px solid #44cf6c;\n"
+                                           "}\n"
+                                           "\n"
+                                           "QMenuBar::item:pressed\n"
+                                           "{\n"
+                                           "    background: #444;\n"
+                                           "    border: 1px solid #000;\n"
+                                           "    background-color: QLinearGradient(\n"
+                                           "        x1:0, y1:0,\n"
+                                           "        x2:0, y2:1,\n"
+                                           "        stop:1 #212121,\n"
+                                           "        stop:0.4 #343434/*,\n"
+                                           "        stop:0.2 #343434,\n"
+                                           "        stop:0.1 #44cf6c*/\n"
+                                           "    );\n"
+                                           "    margin-bottom:-1px;\n"
+                                           "    padding-bottom:1px;\n"
+                                           "}\n"
+                                           "\n"
+                                           "QMenu\n"
+                                           "{\n"
+                                           "    border: 1px solid #000;\n"
+                                           "}\n"
+                                           "\n"
+                                           "QMenu::item\n"
+                                           "{\n"
+                                           "    padding: 2px 20px 2px 20px;\n"
+                                           "}\n"
+                                           "\n"
+                                           "QMenu::item:selected\n"
+                                           "{\n"
+                                           "    color: #000000;\n"
+                                           "}\n"
+                                           "\n"
+                                           "QWidget:disabled\n"
+                                           "{\n"
+                                           "    color: #404040;\n"
+                                           "    background-color: #323232;\n"
+                                           "}\n"
+                                           "\n"
+                                           "QAbstractItemView\n"
+                                           "{\n"
+                                           "    background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #4d4d4d, stop: 0.1 #646464, stop: 1 #5d5d5d);\n"
+                                           "}\n"
+                                           "\n"
+                                           "QWidget:focus\n"
+                                           "{\n"
+                                           "    border: 2px solid #44cf6c;\n"
+                                           "}\n"
+                                           "\n"
+                                           "QLineEdit\n"
+                                           "{\n"
+                                           "  color:#323232;\n"
+                                           "    background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #4d4d4d, stop: 0 #646464, stop: 1 #5d5d5d);\n"
+                                           "    padding: 5px;\n"
+                                           "    border-style: solid;\n"
+                                           "    border: 1px solid #4988af;\n"
+                                           "  border-radius:15;\n"
+                                           "  padding-left:10px;\n"
+                                           "}\n"
+                                           "\n"
+                                           "QPushButton\n"
+                                           "{\n"
+                                           "    color: #f6f8ff;\n"
+                                           "  background-color: #4988af;\n"
+                                           "    border-width: 1px;\n"
+                                           "    border-color: #4988af;\n"
+                                           "    border-style: solid;\n"
+                                           "    border-radius: 15;\n"
+                                           "    padding: 5px;\n"
+                                           "    font-size: 20px;\n"
+                                           "    padding-left: 5px;\n"
+                                           "    padding-right: 5px;\n"
+                                           "  width: 100px;\n"
+                                           "  margin-top:10px;\n"
+                                           "  \n"
+                                           "}\n"
+                                           "\n"
+                                           "QPushButton:pressed\n"
+                                           "{\n"
+                                           "    background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #2d2d2d, stop: 0.1 #2b2b2b, stop: 0.5 #292929, stop: 0.9 #282828, stop: 1 #252525);\n"
+                                           "}\n"
+                                           "\n"
+                                           "QComboBox\n"
+                                           "{\n"
+                                           "    selection-background-color: #44cf6c;\n"
+                                           "    background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #565656, stop: 0.1 #525252, stop: 0.5 #4e4e4e, stop: 0.9 #4a4a4a, stop: 1 #464646);\n"
+                                           "    border-style: solid;\n"
+                                           "    border: 1px solid #1e1e1e;\n"
+                                           "    border-radius: 5;\n"
+                                           "}\n"
+                                           "\n"
+                                           "QComboBox:hover,QPushButton:hover\n"
+                                           "{\n"
+                                           "    border: 2px solid QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #44cf6c, stop: 1 #44cf6c);\n"
+                                           "}\n"
+                                           "\n"
+                                           "\n"
+                                           "QComboBox:on\n"
+                                           "{\n"
+                                           "    padding-top: 3px;\n"
+                                           "    padding-left: 4px;\n"
+                                           "    background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #2d2d2d, stop: 0.1 #2b2b2b, stop: 0.5 #292929, stop: 0.9 #282828, stop: 1 #252525);\n"
+                                           "    selection-background-color: #44cf6c;\n"
+                                           "}\n"
+                                           "\n"
+                                           "QComboBox QAbstractItemView\n"
+                                           "{\n"
+                                           "    border: 2px solid darkgray;\n"
+                                           "    selection-background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #ffa02f, stop: 1 #44cf6c);\n"
+                                           "}\n"
+                                           "\n"
+                                           "QComboBox::drop-down\n"
+                                           "{\n"
+                                           "     subcontrol-origin: padding;\n"
+                                           "     subcontrol-position: top right;\n"
+                                           "     width: 15px;\n"
+                                           "\n"
+                                           "     border-left-width: 0px;\n"
+                                           "     border-left-color: darkgray;\n"
+                                           "     border-left-style: solid; /* just a single line */\n"
+                                           "     border-top-right-radius: 3px; /* same radius as the QComboBox */\n"
+                                           "     border-bottom-right-radius: 3px;\n"
+                                           " }\n"
+                                           "\n"
+                                           "QComboBox::down-arrow\n"
+                                           "{\n"
+                                           "     image: url(:/down_arrow.png);\n"
+                                           "}\n"
+                                           "\n"
+                                           "QGroupBox:focus\n"
+                                           "{\n"
+                                           "border: 2px solid QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #44cf6c, stop: 1 #44cf6c);\n"
+                                           "}\n"
+                                           "\n"
+                                           "QTextEdit:focus\n"
+                                           "{\n"
+                                           "    border: 2px solid QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #44cf6c, stop: 1 #44cf6c);\n"
+                                           "}\n"
+                                           "\n"
+                                           "QScrollBar:horizontal {\n"
+                                           "     border: 1px solid #222222;\n"
+                                           "     background: #437ca0;\n"
+                                           "     height: 10px;\n"
+                                           "     margin: 0px 16px 0 16px;\n"
+                                           "}\n"
+                                           "\n"
+                                           "QScrollBar::handle:horizontal\n"
+                                           "{\n"
+                                           "      background: #e1e8e1;\n"
+                                           "      min-height: 20px;\n"
+                                           "      border-radius: 2px;\n"
+                                           "}\n"
+                                           "\n"
+                                           "QScrollBar::add-line:horizontal {\n"
+                                           "      border: 1px solid #1b1b19;\n"
+                                           "      border-radius: 2px;\n"
+                                           "      background: QLinearGradient( x1: 0, y1: 0, x2: 1, y2: 0, stop: 0 #ffa02f, stop: 1 #44cf6c);\n"
+                                           "      width: 14px;\n"
+                                           "      subcontrol-position: right;\n"
+                                           "      subcontrol-origin: margin;\n"
+                                           "}\n"
+                                           "\n"
+                                           "QScrollBar::sub-line:horizontal {\n"
+                                           "      border: 1px solid #1b1b19;\n"
+                                           "      border-radius: 2px;\n"
+                                           "      background: QLinearGradient( x1: 0, y1: 0, x2: 1, y2: 0, stop: 0 #ffa02f, stop: 1 #44cf6c);\n"
+                                           "      width: 14px;\n"
+                                           "     subcontrol-position: left;\n"
+                                           "     subcontrol-origin: margin;\n"
+                                           "}\n"
+                                           "\n"
+                                           "QScrollBar::right-arrow:horizontal, QScrollBar::left-arrow:horizontal\n"
+                                           "{\n"
+                                           "      border: 1px solid black;\n"
+                                           "      width: 1px;\n"
+                                           "      height: 1px;\n"
+                                           "      background: white;\n"
+                                           "}\n"
+                                           "\n"
+                                           "QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal\n"
+                                           "{\n"
+                                           "      background: none;\n"
+                                           "}\n"
+                                           "\n"
+                                           "QScrollBar:vertical\n"
+                                           "{\n"
+                                           "      background: #fff;\n"
+                                           "      width: 10px;\n"
+                                           "      margin: 16px 0 16px 0;\n"
+                                           "      border: 1px solid #4988af;\n"
+                                           "}\n"
+                                           "\n"
+                                           "QScrollBar::handle:vertical\n"
+                                           "{\n"
+                                           "    /*437ca0*/\n"
+                                           "      background: #e1e8e1;\n"
+                                           "      min-height: 20px;\n"
+                                           "      border-radius: 2px;\n"
+                                           "}\n"
+                                           "\n"
+                                           "QScrollBar::add-line:vertical\n"
+                                           "{\n"
+                                           "      border: 1px solid #34617c;\n"
+                                           "      border-radius: 2px;\n"
+                                           "      background: #34617c;\n"
+                                           "      height: 14px;\n"
+                                           "      subcontrol-position: bottom;\n"
+                                           "      subcontrol-origin: margin;\n"
+                                           "}\n"
+                                           "\n"
+                                           "QScrollBar::sub-line:vertical\n"
+                                           "{\n"
+                                           "      border: 1px solid #34617c;\n"
+                                           "      border-radius: 2px;\n"
+                                           "      background: #34617c;\n"
+                                           "      height: 14px;\n"
+                                           "      subcontrol-position: top;\n"
+                                           "      subcontrol-origin: margin;\n"
+                                           "}\n"
+                                           "\n"
+                                           "QScrollBar::up-arrow:vertical, QScrollBar::down-arrow:vertical\n"
+                                           "{\n"
+                                           "      border: 1px solid #44cf6c;\n"
+                                           "      width: 2px;\n"
+                                           "      height: 2px;\n"
+                                           "      background: #44cf6c;\n"
+                                           "}\n"
+                                           "\n"
+                                           "\n"
+                                           "QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical\n"
+                                           "{\n"
+                                           "      background: none;\n"
+                                           "}\n"
+                                           "\n"
+                                           "QTextEdit\n"
+                                           "{\n"
+                                           "    background-color: #242424;\n"
+                                           "}\n"
+                                           "\n"
+                                           "QPlainTextEdit\n"
+                                           "{\n"
+                                           "    background-color: #242424;\n"
+                                           "}\n"
+                                           "\n"
+                                           "/*QHeaderView::section\n"
+                                           "{\n"
+                                           "    background-color: QLinearGradient(x1:0, y1:0, x2:0, y2:1, stop:0 #616161, stop: 0.5 #505050, stop: 0.6 #434343, stop:1 #656565);\n"
+                                           "    color: white;\n"
+                                           "    padding-left: 4px;\n"
+                                           "    border: 1px solid #6c6c6c;\n"
+                                           "}*/\n"
+                                           "\n"
+                                           "QCheckBox:disabled\n"
+                                           "{\n"
+                                           "color: #414141;\n"
+                                           "}\n"
+                                           "\n"
+                                           "QDockWidget::title\n"
+                                           "{\n"
+                                           "    text-align: center;\n"
+                                           "    spacing: 3px; /* spacing between items in the tool bar */\n"
+                                           "    background-color: QLinearGradient(x1:0, y1:0, x2:0, y2:1, stop:0 #323232, stop: 0.5 #242424, stop:1 #323232);\n"
+                                           "}\n"
+                                           "\n"
+                                           "QDockWidget::close-button, QDockWidget::float-button\n"
+                                           "{\n"
+                                           "    text-align: center;\n"
+                                           "    spacing: 1px; /* spacing between items in the tool bar */\n"
+                                           "    background-color: QLinearGradient(x1:0, y1:0, x2:0, y2:1, stop:0 #323232, stop: 0.5 #242424, stop:1 #323232);\n"
+                                           "}\n"
+                                           "\n"
+                                           "QDockWidget::close-button:hover, QDockWidget::float-button:hover\n"
+                                           "{\n"
+                                           "    background: #242424;\n"
+                                           "}\n"
+                                           "\n"
+                                           "QDockWidget::close-button:pressed, QDockWidget::float-button:pressed\n"
+                                           "{\n"
+                                           "    padding: 1px -1px -1px 1px;\n"
+                                           "}\n"
+                                           "\n"
+                                           "QMainWindow::separator\n"
+                                           "{\n"
+                                           "    background-color: QLinearGradient(x1:0, y1:0, x2:0, y2:1, stop:0 #161616, stop: 0.5 #151515, stop: 0.6 #212121, stop:1 #343434);\n"
+                                           "    color: white;\n"
+                                           "    padding-left: 4px;\n"
+                                           "    border: 1px solid #4c4c4c;\n"
+                                           "    spacing: 3px; /* spacing between items in the tool bar */\n"
+                                           "}\n"
+                                           "\n"
+                                           "QMainWindow::separator:hover\n"
+                                           "{\n"
+                                           "\n"
+                                           "    background-color: QLinearGradient(x1:0, y1:0, x2:0, y2:1, stop:0 #44cf6c, stop:0.5 #b56c17 stop:1 #ffa02f);\n"
+                                           "    color: white;\n"
+                                           "    padding-left: 4px;\n"
+                                           "    border: 1px solid #6c6c6c;\n"
+                                           "    spacing: 3px; /* spacing between items in the tool bar */\n"
+                                           "}\n"
+                                           "\n"
+                                           "QToolBar::handle\n"
+                                           "{\n"
+                                           "     spacing: 3px; /* spacing between items in the tool bar */\n"
+                                           "     background: url(:/images/handle.png);\n"
+                                           "}\n"
+                                           "\n"
+                                           "QMenu::separator\n"
+                                           "{\n"
+                                           "    height: 2px;\n"
+                                           "    background-color: QLinearGradient(x1:0, y1:0, x2:0, y2:1, stop:0 #161616, stop: 0.5 #151515, stop: 0.6 #212121, stop:1 #343434);\n"
+                                           "    color: white;\n"
+                                           "    padding-left: 4px;\n"
+                                           "    margin-left: 10px;\n"
+                                           "    margin-right: 5px;\n"
+                                           "}\n"
+                                           "\n"
+                                           "QProgressBar\n"
+                                           "{\n"
+                                           "    border: 2px solid grey;\n"
+                                           "    border-radius: 5px;\n"
+                                           "    text-align: center;\n"
+                                           "}\n"
+                                           "\n"
+                                           "QProgressBar::chunk\n"
+                                           "{\n"
+                                           "    background-color: #44cf6c;\n"
+                                           "    width: 2.15px;\n"
+                                           "    margin: 0.5px;\n"
+                                           "}\n"
+                                           "\n"
+                                           "QTabBar::tab {\n"
+                                           "    color: #4988af;\n"
+                                           "    border: 0px solid #444;\n"
+                                           "    /*border-bottom-style: none;*/\n"
+                                           "    background-color: #f6f8ff;\n"
+                                           "    padding-left: 30px;\n"
+                                           "    padding-right: 30px;\n"
+                                           "    padding-top: 10px;\n"
+                                           "    padding-bottom: 5px;\n"
+                                           "    margin-right: 1px;\n"
+                                           "  margin-bottom: 3px;\n"
+                                           "}\n"
+                                           "\n"
+                                           "QTabBar:focus{\n"
+                                           "    border: 0px;\n"
+                                           "}\n"
+                                           "\n"
+                                           "QTabWidget::pane {\n"
+                                           "    border: 0px solid #444;\n"
+                                           "    top: 0px;\n"
+                                           "}\n"
+                                           "\n"
+                                           "QTabBar::tab:last\n"
+                                           "{\n"
+                                           "    margin-right: 0; /* the last selected tab has nothing to overlap with on the right */\n"
+                                           "    border-top-right-radius: 5px;\n"
+                                           "}\n"
+                                           "\n"
+                                           "QTabBar::tab:first:!selected\n"
+                                           "{\n"
+                                           " margin-left: 0px; /* the last selected tab has nothing to overlap with on the right */\n"
+                                           "\n"
+                                           "\n"
+                                           "    border-top-left-radius: 5px;\n"
+                                           "}\n"
+                                           "\n"
+                                           "QTabBar::tab:!selected\n"
+                                           "{\n"
+                                           "    color: #f6f8ff;\n"
+                                           "    border-bottom-style: solid;\n"
+                                           "    margin-top: 3px;\n"
+                                           "    background-color: #4988af;\n"
+                                           "}\n"
+                                           "\n"
+                                           "QTabBar::tab:selected\n"
+                                           "{\n"
+                                           "    border-top-left-radius: 3px;\n"
+                                           "    border-top-right-radius: 3px;\n"
+                                           "    margin-bottom: 0px;\n"
+                                           "  background-color: #e1e8e1;\n"
+                                           "  color: #4988af;\n"
+                                           "}\n"
+                                           "\n"
+                                           "QTabBar::tab:!selected:hover\n"
+                                           "{\n"
+                                           "    /*border-top: 2px solid #44cf6c;\n"
+                                           "    padding-bottom: 3px;\n"
+                                           "  #edff7a\n"
+                                           "  #ffd23f\n"
+                                           "  #f46036*/\n"
+                                           "    border-top-left-radius: 3px;\n"
+                                           "    border-top-right-radius: 3px;\n"
+                                           "    background-color: #44cf6c;\n"
+                                           "  color: #274690;\n"
+                                           "}\n"
+                                           "\n"
+                                           "QRadioButton::indicator:checked, QRadioButton::indicator:unchecked{\n"
+                                           "    color: #44cf6c;\n"
+                                           "    background-color: #f6f8ff;\n"
+                                           "    border: 2px solid #4988af;\n"
+                                           "    border-radius: 6px;\n"
+                                           "  padding : 15px;\n"
+                                           "}\n"
+                                           "\n"
+                                           "QRadioButton:focus{\n"
+                                           "    border: 0px;\n"
+                                           "}\n"
+                                           "\n"
+                                           "QRadioButton::indicator:checked\n"
+                                           "{\n"
+                                           "    background-color: #44cf6c;\n"
+                                           "  border-radius: 6px;\n"
+                                           "  padding : 20px;\n"
+                                           "}\n"
+                                           "\n"
+                                           "QRadioButton::indicator\n"
+                                           "{\n"
+                                           "    border-radius: 1px solid #4988af;\n"
+                                           "}\n"
+                                           "\n"
+                                           "QRadioButton::indicator:hover{\n"
+                                           "  border: 1px solid #44cf6c;\n"
+                                           "}\n"
+                                           "\n"
+                                           "QCheckBox::indicator{\n"
+                                           "    color: #000;\n"
+                                           "    background-color: #f6f8ff;\n"
+                                           "    border: 2px solid #4988af;\n"
+                                           "    width: 14px;\n"
+                                           "    height: 14px;\n"
+                                           "    border-radius: 5;\n"
+                                           "}\n"
+                                           "\n"
+                                           "QCheckBox::indicator:hover\n"
+                                           "{\n"
+                                           "    border: 1px solid #44cf6c;\n"
+                                           "border-radius: 5;\n"
+                                           "}\n"
+                                           "\n"
+                                           "QCheckBox:focus{\n"
+                                           "    border: 0px;\n"
+                                           "}\n"
+                                           "\n"
+                                           "\n"
+                                           "QCheckBox::indicator:checked\n"
+                                           "{\n"
+                                           "    image:url(:/images/images/checkbox.png);\n"
+                                           "}\n"
+                                           "\n"
+                                           "QCheckBox::indicator:disabled, QRadioButton::indicator:disabled\n"
+                                           "{\n"
+                                           "    border: 1px solid #444;\n"
+                                           "}\n"
+                                           "QMainWindow{\n"
+                                           "\n"
+                                           "  background-color:#f6f8ff;\n"
+                                           "  margin:0px;\n"
+                                           "}\n"
+                                           "\n"
+                                           "QHeaderView::section {\n"
+                                           "    color: #f6f8ff;\n"
+                                           "    background-color: #4988af;\n"
+                                           "      border: 1px solid #fffff8;\n"
+                                           "}\n"
+                                           "QHeaderView::section:horizontal {\n"
+                                           "    padding: 4px;\n"
+                                           "    font-size: 12pt;\n"
+                                           "}\n"
+                                           "\n"
+                                           "QHeaderView::section:vertical {\n"
+                                           "    padding: 2px;\n"
+                                           "    font-size: 10pt;\n"
+                                           "}\n"
+                                           "\n"
+                                           "QLabel:focus{\n"
+                                           "    border: 0px;\n"
+                                           "}\n"
+                                           ""))
         self.centralWidget = QtGui.QWidget(MainWindow)
         self.centralWidget.setStyleSheet(_fromUtf8("background-color:#f6f8ff"))
         self.centralWidget.setObjectName(_fromUtf8("centralWidget"))
@@ -620,11 +629,12 @@ class Ui_MainWindow(object):
         self.pwd.setWhatsThis(_fromUtf8(""))
         self.pwd.setAccessibleName(_fromUtf8(""))
         self.pwd.setStyleSheet(_fromUtf8("border-radius:15;padding-left:10px;"))
-        self.pwd.setInputMethodHints(QtCore.Qt.ImhHiddenText|QtCore.Qt.ImhNoAutoUppercase|QtCore.Qt.ImhNoPredictiveText)
+        self.pwd.setInputMethodHints(
+            QtCore.Qt.ImhHiddenText | QtCore.Qt.ImhNoAutoUppercase | QtCore.Qt.ImhNoPredictiveText)
         self.pwd.setInputMask(_fromUtf8(""))
         self.pwd.setText(_fromUtf8(""))
         self.pwd.setEchoMode(QtGui.QLineEdit.Password)
-        self.pwd.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
+        self.pwd.setAlignment(QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft | QtCore.Qt.AlignVCenter)
         self.pwd.setObjectName(_fromUtf8("pwd"))
         self.formLayout_5.setWidget(3, QtGui.QFormLayout.FieldRole, self.pwd)
         self.Login = QtGui.QPushButton(self.login)
@@ -635,15 +645,20 @@ class Ui_MainWindow(object):
         self.Login.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.Login.setLayoutDirection(QtCore.Qt.LeftToRight)
         self.Login.setStyleSheet(_fromUtf8("padding:5px;\n"
-"border-radius:15;margin-top:10px;\n"
-"background-color: #4988af;"))
+                                           "border-radius:15;margin-top:10px;\n"
+                                           "background-color: #4988af;"))
         self.Login.setFlat(False)
         self.Login.setObjectName(_fromUtf8("Login"))
+        self.Login.clicked.connect(self.loginClicked)
+
         self.formLayout_5.setWidget(4, QtGui.QFormLayout.FieldRole, self.Login)
         self.goToSignup = QtGui.QLabel(self.login)
         self.goToSignup.setMouseTracking(True)
         self.goToSignup.setFocusPolicy(QtCore.Qt.ClickFocus)
         self.goToSignup.setObjectName(_fromUtf8("goToSignup"))
+        self.goToSignup.mouseReleaseEvent = self.setSignupWindow
+
+
         self.formLayout_5.setWidget(5, QtGui.QFormLayout.FieldRole, self.goToSignup)
         self.label_9 = QtGui.QLabel(self.login)
         self.label_9.setObjectName(_fromUtf8("label_9"))
@@ -717,11 +732,12 @@ class Ui_MainWindow(object):
         self.sign_pwd.setWhatsThis(_fromUtf8(""))
         self.sign_pwd.setAccessibleName(_fromUtf8(""))
         self.sign_pwd.setStyleSheet(_fromUtf8("border-radius:15;padding-left:10px;"))
-        self.sign_pwd.setInputMethodHints(QtCore.Qt.ImhHiddenText|QtCore.Qt.ImhNoAutoUppercase|QtCore.Qt.ImhNoPredictiveText)
+        self.sign_pwd.setInputMethodHints(
+            QtCore.Qt.ImhHiddenText | QtCore.Qt.ImhNoAutoUppercase | QtCore.Qt.ImhNoPredictiveText)
         self.sign_pwd.setInputMask(_fromUtf8(""))
         self.sign_pwd.setText(_fromUtf8(""))
         self.sign_pwd.setEchoMode(QtGui.QLineEdit.Password)
-        self.sign_pwd.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
+        self.sign_pwd.setAlignment(QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft | QtCore.Qt.AlignVCenter)
         self.sign_pwd.setObjectName(_fromUtf8("sign_pwd"))
         self.formLayout_6.setWidget(4, QtGui.QFormLayout.FieldRole, self.sign_pwd)
         self.conf_pwd = QtGui.QLineEdit(self.signup)
@@ -730,7 +746,8 @@ class Ui_MainWindow(object):
         font.setPointSize(12)
         self.conf_pwd.setFont(font)
         self.conf_pwd.setStyleSheet(_fromUtf8("border-radius:15;padding-left:10px;"))
-        self.conf_pwd.setInputMethodHints(QtCore.Qt.ImhHiddenText|QtCore.Qt.ImhNoAutoUppercase|QtCore.Qt.ImhNoPredictiveText)
+        self.conf_pwd.setInputMethodHints(
+            QtCore.Qt.ImhHiddenText | QtCore.Qt.ImhNoAutoUppercase | QtCore.Qt.ImhNoPredictiveText)
         self.conf_pwd.setEchoMode(QtGui.QLineEdit.Password)
         self.conf_pwd.setObjectName(_fromUtf8("conf_pwd"))
         self.formLayout_6.setWidget(5, QtGui.QFormLayout.FieldRole, self.conf_pwd)
@@ -750,15 +767,20 @@ class Ui_MainWindow(object):
         self.Signup.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.Signup.setLayoutDirection(QtCore.Qt.LeftToRight)
         self.Signup.setStyleSheet(_fromUtf8("padding:5px;\n"
-"border-radius:15;margin-top:10px;\n"
-"background-color: #4988af;"))
+                                            "border-radius:15;margin-top:10px;\n"
+                                            "background-color: #4988af;"))
         self.Signup.setFlat(False)
         self.Signup.setObjectName(_fromUtf8("Signup"))
+        self.Signup.clicked.connect(self.submitClicked)
+
         self.formLayout_6.setWidget(7, QtGui.QFormLayout.FieldRole, self.Signup)
         self.goToLogin = QtGui.QLabel(self.signup)
         self.goToLogin.setMouseTracking(True)
         self.goToLogin.setFocusPolicy(QtCore.Qt.ClickFocus)
         self.goToLogin.setObjectName(_fromUtf8("goToLogin"))
+        self.goToLogin.mouseReleaseEvent = self.setLoginWindow
+
+
         self.formLayout_6.setWidget(8, QtGui.QFormLayout.FieldRole, self.goToLogin)
         self.horizontalLayout_2.addLayout(self.formLayout_6)
         self.stackedWidget.addWidget(self.signup)
@@ -769,100 +791,100 @@ class Ui_MainWindow(object):
         self.horizontalLayout_4.setObjectName(_fromUtf8("horizontalLayout_4"))
         self.scrollArea = QtGui.QScrollArea(self.Main)
         self.scrollArea.setStyleSheet(_fromUtf8("QScrollBar:vertical\n"
-"{\n"
-"      background: #fff;\n"
-"      width: 10px;\n"
-"      margin: 16px 0 16px 0;\n"
-"      border: 1px solid #4988af;\n"
-"}\n"
-"\n"
-"QScrollBar::handle:vertical\n"
-"{\n"
-"    /*437ca0*/\n"
-"      background: #e1e8e1;\n"
-"      min-height: 20px;\n"
-"      border-radius: 2px;\n"
-"}\n"
-"\n"
-"QScrollBar::add-line:vertical\n"
-"{\n"
-"      border: 1px solid #34617c;\n"
-"      border-radius: 2px;\n"
-"      background: #34617c;\n"
-"      height: 14px;\n"
-"      subcontrol-position: bottom;\n"
-"      subcontrol-origin: margin;\n"
-"}\n"
-"\n"
-"QScrollBar::sub-line:vertical\n"
-"{\n"
-"      border: 1px solid #34617c;\n"
-"      border-radius: 2px;\n"
-"      background: #34617c;\n"
-"      height: 14px;\n"
-"      subcontrol-position: top;\n"
-"      subcontrol-origin: margin;\n"
-"}\n"
-"\n"
-"QScrollBar::up-arrow:vertical, QScrollBar::down-arrow:vertical\n"
-"{\n"
-"      border: 1px solid #44cf6c;\n"
-"      width: 2px;\n"
-"      height: 2px;\n"
-"      background: #44cf6c;\n"
-"}\n"
-"\n"
-"\n"
-"QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical\n"
-"{\n"
-"      background: none;\n"
-"}\n"
-"\n"
-"QScrollBar:horizontal {\n"
-"     border: 1px solid #4988af;\n"
-"     background: #ffffff;\n"
-"     height: 10px;\n"
-"     margin: 0px 16px 0 16px;\n"
-"}\n"
-"\n"
-"QScrollBar::handle:horizontal\n"
-"{\n"
-"      background: #e1e8e1;\n"
-"      min-height: 20px;\n"
-"      border-radius: 2px;\n"
-"}\n"
-"\n"
-"QScrollBar::add-line:horizontal {\n"
-"      border: 1px solid #34617c;\n"
-"      border-radius: 2px;\n"
-"      background: #34617c;\n"
-"      width: 14px;\n"
-"      subcontrol-position: right;\n"
-"      subcontrol-origin: margin;\n"
-"}\n"
-"\n"
-"QScrollBar::sub-line:horizontal {\n"
-"      border: 1px solid #34617c;\n"
-"      border-radius: 2px;\n"
-"      background: #34617c;\n"
-"      width: 14px;\n"
-"     subcontrol-position: left;\n"
-"     subcontrol-origin: margin;\n"
-"}\n"
-"\n"
-"QScrollBar::right-arrow:horizontal, QScrollBar::left-arrow:horizontal\n"
-"{\n"
-"      border: 1px solid #44cf6c;\n"
-"      width: 2px;\n"
-"      height: 2px;\n"
-"      background: #44cf6c;\n"
-"}\n"
-"\n"
-"QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal\n"
-"{\n"
-"      background: none;\n"
-"}\n"
-""))
+                                                "{\n"
+                                                "      background: #fff;\n"
+                                                "      width: 10px;\n"
+                                                "      margin: 16px 0 16px 0;\n"
+                                                "      border: 1px solid #4988af;\n"
+                                                "}\n"
+                                                "\n"
+                                                "QScrollBar::handle:vertical\n"
+                                                "{\n"
+                                                "    /*437ca0*/\n"
+                                                "      background: #e1e8e1;\n"
+                                                "      min-height: 20px;\n"
+                                                "      border-radius: 2px;\n"
+                                                "}\n"
+                                                "\n"
+                                                "QScrollBar::add-line:vertical\n"
+                                                "{\n"
+                                                "      border: 1px solid #34617c;\n"
+                                                "      border-radius: 2px;\n"
+                                                "      background: #34617c;\n"
+                                                "      height: 14px;\n"
+                                                "      subcontrol-position: bottom;\n"
+                                                "      subcontrol-origin: margin;\n"
+                                                "}\n"
+                                                "\n"
+                                                "QScrollBar::sub-line:vertical\n"
+                                                "{\n"
+                                                "      border: 1px solid #34617c;\n"
+                                                "      border-radius: 2px;\n"
+                                                "      background: #34617c;\n"
+                                                "      height: 14px;\n"
+                                                "      subcontrol-position: top;\n"
+                                                "      subcontrol-origin: margin;\n"
+                                                "}\n"
+                                                "\n"
+                                                "QScrollBar::up-arrow:vertical, QScrollBar::down-arrow:vertical\n"
+                                                "{\n"
+                                                "      border: 1px solid #44cf6c;\n"
+                                                "      width: 2px;\n"
+                                                "      height: 2px;\n"
+                                                "      background: #44cf6c;\n"
+                                                "}\n"
+                                                "\n"
+                                                "\n"
+                                                "QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical\n"
+                                                "{\n"
+                                                "      background: none;\n"
+                                                "}\n"
+                                                "\n"
+                                                "QScrollBar:horizontal {\n"
+                                                "     border: 1px solid #4988af;\n"
+                                                "     background: #ffffff;\n"
+                                                "     height: 10px;\n"
+                                                "     margin: 0px 16px 0 16px;\n"
+                                                "}\n"
+                                                "\n"
+                                                "QScrollBar::handle:horizontal\n"
+                                                "{\n"
+                                                "      background: #e1e8e1;\n"
+                                                "      min-height: 20px;\n"
+                                                "      border-radius: 2px;\n"
+                                                "}\n"
+                                                "\n"
+                                                "QScrollBar::add-line:horizontal {\n"
+                                                "      border: 1px solid #34617c;\n"
+                                                "      border-radius: 2px;\n"
+                                                "      background: #34617c;\n"
+                                                "      width: 14px;\n"
+                                                "      subcontrol-position: right;\n"
+                                                "      subcontrol-origin: margin;\n"
+                                                "}\n"
+                                                "\n"
+                                                "QScrollBar::sub-line:horizontal {\n"
+                                                "      border: 1px solid #34617c;\n"
+                                                "      border-radius: 2px;\n"
+                                                "      background: #34617c;\n"
+                                                "      width: 14px;\n"
+                                                "     subcontrol-position: left;\n"
+                                                "     subcontrol-origin: margin;\n"
+                                                "}\n"
+                                                "\n"
+                                                "QScrollBar::right-arrow:horizontal, QScrollBar::left-arrow:horizontal\n"
+                                                "{\n"
+                                                "      border: 1px solid #44cf6c;\n"
+                                                "      width: 2px;\n"
+                                                "      height: 2px;\n"
+                                                "      background: #44cf6c;\n"
+                                                "}\n"
+                                                "\n"
+                                                "QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal\n"
+                                                "{\n"
+                                                "      background: none;\n"
+                                                "}\n"
+                                                ""))
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName(_fromUtf8("scrollArea"))
         self.scrollAreaWidgetContents = QtGui.QWidget()
@@ -878,7 +900,7 @@ class Ui_MainWindow(object):
         font.setWeight(50)
         self.tabWidget.setFont(font)
         self.tabWidget.setStyleSheet(_fromUtf8("background-color : #eff7ef\n"
-"/*#eaf2ea*/"))
+                                               "/*#eaf2ea*/"))
         self.tabWidget.setObjectName(_fromUtf8("tabWidget"))
         self.Sourcerer = QtGui.QWidget()
         self.Sourcerer.setObjectName(_fromUtf8("Sourcerer"))
@@ -908,8 +930,8 @@ class Ui_MainWindow(object):
         font.setFamily(_fromUtf8("KacstTitleL"))
         self.sine_volt.setFont(font)
         self.sine_volt.setStyleSheet(_fromUtf8("focus{\n"
-"    border: 0px;\n"
-"}"))
+                                               "    border: 0px;\n"
+                                               "}"))
         self.sine_volt.setObjectName(_fromUtf8("sine_volt"))
         self.verticalLayout.addWidget(self.sine_volt)
         self.var_volt = QtGui.QRadioButton(self.groupBox)
@@ -963,9 +985,9 @@ class Ui_MainWindow(object):
         self.const_start.setMaximumSize(QtCore.QSize(150, 16777215))
         self.const_start.setCursor(QtGui.QCursor(QtCore.Qt.ClosedHandCursor))
         self.const_start.setStyleSheet(_fromUtf8("padding:5px;\n"
-"color: #f6f8ff;\n"
-"border-radius:5;margin-top:10px;\n"
-"background-color: #4988af;"))
+                                                 "color: #f6f8ff;\n"
+                                                 "border-radius:5;margin-top:10px;\n"
+                                                 "background-color: #4988af;"))
         self.const_start.setObjectName(_fromUtf8("const_start"))
         self.formLayout_2.setWidget(3, QtGui.QFormLayout.FieldRole, self.const_start)
         self.toggle_led_const = QtGui.QCheckBox(self.cont_voltage)
@@ -1021,9 +1043,9 @@ class Ui_MainWindow(object):
         self.var_start.setFont(font)
         self.var_start.setCursor(QtGui.QCursor(QtCore.Qt.ClosedHandCursor))
         self.var_start.setStyleSheet(_fromUtf8("padding:5px;\n"
-"color: #f6f8ff;\n"
-"border-radius:5;margin-top:10px;\n"
-"background-color: #4988af;"))
+                                               "color: #f6f8ff;\n"
+                                               "border-radius:5;margin-top:10px;\n"
+                                               "background-color: #4988af;"))
         self.var_start.setObjectName(_fromUtf8("var_start"))
         self.formLayout_3.setWidget(4, QtGui.QFormLayout.FieldRole, self.var_start)
         self.label_21 = QtGui.QLabel(self.variable_voltage)
@@ -1053,20 +1075,20 @@ class Ui_MainWindow(object):
         self.gridLayout.addWidget(self.groupBox, 0, 2, 1, 3)
         self.export_2 = QtGui.QPushButton(self.Sourcerer)
         self.export_2.setStyleSheet(_fromUtf8("padding:5px;\n"
-"border-radius:5;margin-top:10px;\n"
-"background-color: #4988af;"))
+                                              "border-radius:5;margin-top:10px;\n"
+                                              "background-color: #4988af;"))
         self.export_2.setObjectName(_fromUtf8("export_2"))
         self.gridLayout.addWidget(self.export_2, 2, 2, 1, 1)
         self.goToGraph = QtGui.QPushButton(self.Sourcerer)
         self.goToGraph.setStyleSheet(_fromUtf8("padding:5px;\n"
-"border-radius:5;margin-top:10px;\n"
-"background-color: #4988af;"))
+                                               "border-radius:5;margin-top:10px;\n"
+                                               "background-color: #4988af;"))
         self.goToGraph.setObjectName(_fromUtf8("goToGraph"))
         self.gridLayout.addWidget(self.goToGraph, 2, 4, 1, 1)
         self.csv = QtGui.QPushButton(self.Sourcerer)
         self.csv.setStyleSheet(_fromUtf8("padding:5px;\n"
-"border-radius:5;margin-top:10px;\n"
-"background-color: #4988af;"))
+                                         "border-radius:5;margin-top:10px;\n"
+                                         "background-color: #4988af;"))
         self.csv.setObjectName(_fromUtf8("csv"))
         self.gridLayout.addWidget(self.csv, 2, 3, 1, 1)
         self.image_main_1 = QtGui.QLabel(self.Sourcerer)
@@ -1089,9 +1111,9 @@ class Ui_MainWindow(object):
         self.gridLayout.addWidget(self.image_main_1, 0, 0, 3, 2)
         self.valuesTable = QtGui.QTableWidget(self.Sourcerer)
         self.valuesTable.setStyleSheet(_fromUtf8("/*selection-background-color: #4988af;\n"
-"alternate-background-color: #000000;*/\n"
-"\n"
-""))
+                                                 "alternate-background-color: #000000;*/\n"
+                                                 "\n"
+                                                 ""))
         self.valuesTable.setRowCount(0)
         self.valuesTable.setObjectName(_fromUtf8("valuesTable"))
         self.valuesTable.setColumnCount(4)
@@ -1155,8 +1177,8 @@ class Ui_MainWindow(object):
         font.setWeight(75)
         self.xAxis.setFont(font)
         self.xAxis.setStyleSheet(_fromUtf8("padding : 5px;color: #4988af;\n"
-"border: 1px solid #4988af;\n"
-"/*44cf6c*/"))
+                                           "border: 1px solid #4988af;\n"
+                                           "/*44cf6c*/"))
         self.xAxis.setObjectName(_fromUtf8("xAxis"))
         self.xAxis.addItem(_fromUtf8(""))
         self.gridLayout_2.addWidget(self.xAxis, 0, 1, 1, 1)
@@ -1168,7 +1190,7 @@ class Ui_MainWindow(object):
         font.setWeight(75)
         self.yAxis.setFont(font)
         self.yAxis.setStyleSheet(_fromUtf8("padding : 5px; color: #4988af;\n"
-"border: 1px solid #4988af;"))
+                                           "border: 1px solid #4988af;"))
         self.yAxis.setObjectName(_fromUtf8("yAxis"))
         self.yAxis.addItem(_fromUtf8(""))
         self.yAxis.addItem(_fromUtf8(""))
@@ -1202,9 +1224,9 @@ class Ui_MainWindow(object):
         self.gridLayout_2.addWidget(self.bgColor, 1, 3, 1, 1)
         self.plot_graph = QtGui.QPushButton(self.Graph)
         self.plot_graph.setStyleSheet(_fromUtf8("padding:5px;\n"
-"color: #f6f8ff;\n"
-"border-radius:5;margin-top:10px;\n"
-"background-color: #4988af;"))
+                                                "color: #f6f8ff;\n"
+                                                "border-radius:5;margin-top:10px;\n"
+                                                "background-color: #4988af;"))
         self.plot_graph.setObjectName(_fromUtf8("plot_graph"))
         self.gridLayout_2.addWidget(self.plot_graph, 2, 1, 1, 1)
         self.tabWidget.addTab(self.Graph, _fromUtf8(""))
@@ -1269,8 +1291,8 @@ class Ui_MainWindow(object):
         self.arduino_start = QtGui.QPushButton(self.Arduino)
         self.arduino_start.setMaximumSize(QtCore.QSize(150, 16777215))
         self.arduino_start.setStyleSheet(_fromUtf8("margin: 10px;\n"
-"background-color: #4988af;\n"
-"border-radius: 5;"))
+                                                   "background-color: #4988af;\n"
+                                                   "border-radius: 5;"))
         self.arduino_start.setObjectName(_fromUtf8("arduino_start"))
         self.gridLayout_3.addWidget(self.arduino_start, 5, 2, 1, 1)
         spacerItem2 = QtGui.QSpacerItem(278, 628, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
@@ -1335,23 +1357,30 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow", None))
-        self.label_7.setText(_translate("MainWindow", "<html><head/><body><p align=\"center\"><span style=\" font-size:48pt; color:#4988af;\">LOGIN</span></p></body></html>", None))
+        self.label_7.setText(_translate("MainWindow",
+                                        "<html><head/><body><p align=\"center\"><span style=\" font-size:48pt; color:#4988af;\">LOGIN</span></p></body></html>",
+                                        None))
         self.usrname.setPlaceholderText(_translate("MainWindow", "Username", None))
         self.pwd.setPlaceholderText(_translate("MainWindow", "Password", "efeswf"))
         self.Login.setText(_translate("MainWindow", "LOGIN", None))
         self.goToSignup.setText(_translate("MainWindow", "<html><head/><body><p><a href=\\\"whatever\\\">\n"
-"<span style=\" font-size:12pt; color:#4988af;text-decoration: none;\">Create a new account!</span></a></p></body></html>", None))
+                                                         "<span style=\" font-size:12pt; color:#4988af;text-decoration: none;\">Create a new account!</span></a></p></body></html>",
+                                           None))
         self.label_9.setText(_translate("MainWindow", "<html><head/><body><p><a href=\\\"whatever\\\">\n"
-"<span style=\" font-size:12pt; color:#4988af;text-decoration: none;\">Forgot Password?</span></a></p></body></html>", None))
-        self.label_10.setText(_translate("MainWindow", "<html><head/><body><p align=\"center\"><span style=\" font-size:48pt; color:#4988af;\">SIGN UP</span></p></body></html>", None))
+                                                      "<span style=\" font-size:12pt; color:#4988af;text-decoration: none;\">Forgot Password?</span></a></p></body></html>",
+                                        None))
+        self.label_10.setText(_translate("MainWindow",
+                                         "<html><head/><body><p align=\"center\"><span style=\" font-size:48pt; color:#4988af;\">SIGN UP</span></p></body></html>",
+                                         None))
         self.name.setPlaceholderText(_translate("MainWindow", "Name", None))
-        self.sign_usrname.setPlaceholderText(_translate("MainWindow", "e-Mail", None))
-        self.sign_pwd.setPlaceholderText(_translate("MainWindow", "Username", "efeswf"))
-        self.conf_pwd.setPlaceholderText(_translate("MainWindow", "Password", None))
-        self.noIdea.setPlaceholderText(_translate("MainWindow", "Confirm Password", None))
+        self.sign_usrname.setPlaceholderText(_translate("MainWindow", "Username", None))
+        self.sign_pwd.setPlaceholderText(_translate("MainWindow", "Password", "efeswf"))
+        self.conf_pwd.setPlaceholderText(_translate("MainWindow", "Confirm Password", None))
+        self.noIdea.setPlaceholderText(_translate("MainWindow", "e-Mail", None))
         self.Signup.setText(_translate("MainWindow", "SIGN UP", None))
         self.goToLogin.setText(_translate("MainWindow", "<html><head/><body><p><a href=\\\"whatever\\\">\n"
-"<span style=\" font-size:12pt; color:#4988af;text-decoration: none;\">Already a user? Sign in!</span></a></p></body></html>", None))
+                                                        "<span style=\" font-size:12pt; color:#4988af;text-decoration: none;\">Already a user? Sign in!</span></a></p></body></html>",
+                                          None))
         self.label.setText(_translate("MainWindow", "Voltage Specification", None))
         self.const_volt.setText(_translate("MainWindow", "Constant Value", None))
         self.sine_volt.setText(_translate("MainWindow", "Sine Wave", None))
@@ -1401,10 +1430,67 @@ class Ui_MainWindow(object):
         self.arduino_start.setText(_translate("MainWindow", "START", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.Arduino), _translate("MainWindow", "LED", None))
 
+    def setSignupWindow(self,event):
+        self.stackedWidget.setCurrentIndex(1)
+
+    def setLoginWindow(self,event):
+        self.stackedWidget.setCurrentIndex(0)
+
+    def loginClicked(self):
+        userid = self.usrname.text()
+        password = self.pwd.text()
+        cursor = db.cursor()
+        stri = "select * from User where userid = \'" + str(userid) + "\' and password = \'" + str(password) + "\'"
+        cursor.execute(stri)
+        if cursor.fetchone() is not None:
+             self.showMessageBox(MainWindow, "Congrats \n You are Logged In", "Successful Login")
+             self.stackedWidget.setCurrentIndex(2)
+        else:
+             self.showMessageBox(MainWindow, "Please check your userid and password", "Login Error!")
+
+
+    def submitClicked(self):
+        name = str(self.name.text()).strip()
+        email = str(self.noIdea.text()).strip()
+        userid = str(self.sign_usrname.text()).strip()
+        password = str(self.sign_pwd.text()).strip()
+        cpassword = str(self.conf_pwd.text()).strip()
+        if name == "" or email == "" or userid == "" or password == "":
+            self.showMessageBox(MainWindow,"Please fill all the fields","Register Error!")
+        else:
+            cursor = db.cursor()
+            cursor.execute("select * from User where userid=\"" + userid + "\"")
+            if cursor.fetchone() is not None:
+                self.showMessageBox("Choose another userid","Register Error!")
+            else:
+                if password != cpassword:
+                    self.showMessageBox(MainWindow,"Passwords do not match","Register Error!")
+                else:
+                    cursor = db.cursor()
+                    try:
+                        value = "INSERT INTO User(userid,name,password,email) " \
+                                "VALUES(?,?,?,?)"
+                        args = (userid, name, password, email)
+                        cursor.execute(value, args)
+                        db.commit()
+                        self.showMessageBox(MainWindow,"Congrats \n You are successfully registered","Registration Successful")
+                        self.stackedWidget.setCurrentIndex(2)
+                    except Exception as e:
+                        print(e)
+                        db.rollback()
+
+    def showMessageBox(self,win,message,title):
+        msg = QtGui.QMessageBox(win)
+        msg.setText(message)
+        msg.setWindowTitle(title)
+        msg.setIcon(QtGui.QMessageBox.Information)
+        msg.exec_()
+
 import resources_rc
 
 if __name__ == "__main__":
     import sys
+
     app = QtGui.QApplication(sys.argv)
     MainWindow = QtGui.QMainWindow()
     ui = Ui_MainWindow()

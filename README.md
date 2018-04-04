@@ -11,4 +11,3 @@ users for simple measurement experiments. <br />
 For a detailed understanding of the software and it's workings, refer to <br />
 Software Requirements Specification (SRS) document. <br />
 
-Just trying to check if git remote works or not
