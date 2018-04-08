@@ -6,8 +6,20 @@
 #      by: PyQt4 UI code generator 4.10.4
 #
 # WARNING! All changes made in this file will be lost!
+import send_constant
+import step_voltage
+import plot
+
 
 from PyQt4 import QtCore, QtGui
+import sqlite3
+import matplotlib.pyplot as plt
+import ExportGUI
+import export
+
+db = sqlite3.connect("SoftwareProject.db")
+cur = db.cursor()
+cur.execute("create table if not exists User (userid varchar(30),name varchar(30),password varchar(20),email varchar(40));")
 
 try:
     _fromUtf8 = QtCore.QString.fromUtf8
@@ -24,6 +36,14 @@ except AttributeError:
         return QtGui.QApplication.translate(context, text, disambig)
 
 class Ui_MainWindow(object):
+
+    def __init__(self):
+
+        self.values = []
+        self.tim = []
+        self.lcolor = "black"
+        self.bcolor = "white"
+
     def setupUi(self, MainWindow):
         MainWindow.setObjectName(_fromUtf8("MainWindow"))
         MainWindow.resize(1189, 861)
@@ -639,11 +659,15 @@ class Ui_MainWindow(object):
 "background-color: #4988af;"))
         self.Login.setFlat(False)
         self.Login.setObjectName(_fromUtf8("Login"))
+        self.Login.clicked.connect(self.loginClicked)
+
         self.formLayout_5.setWidget(4, QtGui.QFormLayout.FieldRole, self.Login)
         self.goToSignup = QtGui.QLabel(self.login)
         self.goToSignup.setMouseTracking(True)
         self.goToSignup.setFocusPolicy(QtCore.Qt.ClickFocus)
         self.goToSignup.setObjectName(_fromUtf8("goToSignup"))
+        self.goToSignup.mouseReleaseEvent = self.setSignupWindow
+
         self.formLayout_5.setWidget(5, QtGui.QFormLayout.FieldRole, self.goToSignup)
         self.label_9 = QtGui.QLabel(self.login)
         self.label_9.setObjectName(_fromUtf8("label_9"))
@@ -754,11 +778,15 @@ class Ui_MainWindow(object):
 "background-color: #4988af;"))
         self.Signup.setFlat(False)
         self.Signup.setObjectName(_fromUtf8("Signup"))
+        self.Signup.clicked.connect(self.submitClicked)
+
         self.formLayout_6.setWidget(7, QtGui.QFormLayout.FieldRole, self.Signup)
         self.goToLogin = QtGui.QLabel(self.signup)
         self.goToLogin.setMouseTracking(True)
         self.goToLogin.setFocusPolicy(QtCore.Qt.ClickFocus)
         self.goToLogin.setObjectName(_fromUtf8("goToLogin"))
+        self.goToLogin.mouseReleaseEvent = self.setLoginWindow
+
         self.formLayout_6.setWidget(8, QtGui.QFormLayout.FieldRole, self.goToLogin)
         self.horizontalLayout_2.addLayout(self.formLayout_6)
         self.stackedWidget.addWidget(self.signup)
@@ -920,6 +948,10 @@ class Ui_MainWindow(object):
         font.setFamily(_fromUtf8("KacstTitleL"))
         self.const_volt.setFont(font)
         self.const_volt.setObjectName(_fromUtf8("const_volt"))
+
+        self.const_volt.setChecked(True)
+        self.const_volt.toggled.connect(lambda :self.radioButtonFun(1))
+
         self.verticalLayout.addWidget(self.const_volt)
         self.sine_volt = QtGui.QRadioButton(self.groupBox)
         font = QtGui.QFont()
@@ -929,12 +961,16 @@ class Ui_MainWindow(object):
 "    border: 0px;\n"
 "}"))
         self.sine_volt.setObjectName(_fromUtf8("sine_volt"))
+        self.sine_volt.toggled.connect(lambda :self.radioButtonFun(2))
+
         self.verticalLayout.addWidget(self.sine_volt)
         self.var_volt = QtGui.QRadioButton(self.groupBox)
         font = QtGui.QFont()
         font.setFamily(_fromUtf8("KacstTitleL"))
         self.var_volt.setFont(font)
         self.var_volt.setObjectName(_fromUtf8("var_volt"))
+        self.var_volt.toggled.connect(lambda :self.radioButtonFun(3))
+
         self.verticalLayout.addWidget(self.var_volt)
         self.voltage_input = QtGui.QStackedWidget(self.groupBox)
         self.voltage_input.setStyleSheet(_fromUtf8(""))
@@ -982,6 +1018,8 @@ class Ui_MainWindow(object):
         self.toggle_led0.setFont(font)
         self.toggle_led0.setStyleSheet(_fromUtf8("margin-top: 10px;"))
         self.toggle_led0.setObjectName(_fromUtf8("toggle_led0"))
+        self.toggle_led0.toggled.connect(lambda: self.ledOptions(0))
+
         self.formLayout_2.setWidget(4, QtGui.QFormLayout.FieldRole, self.toggle_led0)
         self.options00 = QtGui.QGroupBox(self.cont_voltage)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Preferred, QtGui.QSizePolicy.Preferred)
@@ -991,6 +1029,8 @@ class Ui_MainWindow(object):
         self.options00.setSizePolicy(sizePolicy)
         self.options00.setTitle(_fromUtf8(""))
         self.options00.setObjectName(_fromUtf8("options00"))
+        self.options00.setVisible(False)
+
         self.formLayout_11 = QtGui.QFormLayout(self.options00)
         self.formLayout_11.setFieldGrowthPolicy(QtGui.QFormLayout.AllNonFixedFieldsGrow)
         self.formLayout_11.setObjectName(_fromUtf8("formLayout_11"))
@@ -1039,6 +1079,9 @@ class Ui_MainWindow(object):
 "border-radius:5;margin-top:10px;\n"
 "background-color: #4988af;"))
         self.var_start_3.setObjectName(_fromUtf8("var_start_3"))
+        self.var_start_3.clicked.connect(self.startExperiment)
+
+
         self.formLayout_2.setWidget(8, QtGui.QFormLayout.FieldRole, self.var_start_3)
         self.addopt0 = QtGui.QCheckBox(self.cont_voltage)
         font = QtGui.QFont()
@@ -1047,6 +1090,8 @@ class Ui_MainWindow(object):
         self.addopt0.setFont(font)
         self.addopt0.setStyleSheet(_fromUtf8("margin-top:5px;"))
         self.addopt0.setObjectName(_fromUtf8("addopt0"))
+        self.addopt0.toggled.connect(lambda :self.additionalOptions(self.addopt0))
+
         self.formLayout_2.setWidget(5, QtGui.QFormLayout.FieldRole, self.addopt0)
         self.voltage_input.addWidget(self.cont_voltage)
         self.sine_voltage = QtGui.QWidget()
@@ -1092,6 +1137,8 @@ class Ui_MainWindow(object):
         self.toggle_led1.setFont(font)
         self.toggle_led1.setStyleSheet(_fromUtf8("margin-top: 10px;"))
         self.toggle_led1.setObjectName(_fromUtf8("toggle_led1"))
+        self.toggle_led1.toggled.connect(lambda: self.ledOptions(1))
+
         self.formLayout_8.setWidget(2, QtGui.QFormLayout.FieldRole, self.toggle_led1)
         self.addopt1 = QtGui.QCheckBox(self.sine_voltage)
         font = QtGui.QFont()
@@ -1100,6 +1147,8 @@ class Ui_MainWindow(object):
         self.addopt1.setFont(font)
         self.addopt1.setStyleSheet(_fromUtf8("margin-top: 5px;"))
         self.addopt1.setObjectName(_fromUtf8("addopt1"))
+        self.addopt1.toggled.connect(lambda :self.additionalOptions(self.addopt1))
+
         self.formLayout_8.setWidget(3, QtGui.QFormLayout.FieldRole, self.addopt1)
         self.options01 = QtGui.QGroupBox(self.sine_voltage)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Preferred, QtGui.QSizePolicy.Preferred)
@@ -1109,6 +1158,8 @@ class Ui_MainWindow(object):
         self.options01.setSizePolicy(sizePolicy)
         self.options01.setTitle(_fromUtf8(""))
         self.options01.setObjectName(_fromUtf8("options01"))
+        self.options01.setVisible(False)
+
         self.formLayout_12 = QtGui.QFormLayout(self.options01)
         self.formLayout_12.setFieldGrowthPolicy(QtGui.QFormLayout.AllNonFixedFieldsGrow)
         self.formLayout_12.setObjectName(_fromUtf8("formLayout_12"))
@@ -1215,6 +1266,8 @@ class Ui_MainWindow(object):
         self.toggle_led2.setFont(font)
         self.toggle_led2.setStyleSheet(_fromUtf8("margin-top: 10px;"))
         self.toggle_led2.setObjectName(_fromUtf8("toggle_led2"))
+        self.toggle_led2.toggled.connect(lambda: self.ledOptions(2))
+
         self.formLayout_3.setWidget(3, QtGui.QFormLayout.FieldRole, self.toggle_led2)
         self.addopt2 = QtGui.QCheckBox(self.variable_voltage)
         font = QtGui.QFont()
@@ -1223,6 +1276,8 @@ class Ui_MainWindow(object):
         self.addopt2.setFont(font)
         self.addopt2.setStyleSheet(_fromUtf8("margin-top: 5px;"))
         self.addopt2.setObjectName(_fromUtf8("addopt2"))
+        self.addopt2.toggled.connect(lambda :self.additionalOptions(self.addopt2))
+
         self.formLayout_3.setWidget(4, QtGui.QFormLayout.FieldRole, self.addopt2)
         self.options02 = QtGui.QGroupBox(self.variable_voltage)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Preferred, QtGui.QSizePolicy.Preferred)
@@ -1232,6 +1287,8 @@ class Ui_MainWindow(object):
         self.options02.setSizePolicy(sizePolicy)
         self.options02.setTitle(_fromUtf8(""))
         self.options02.setObjectName(_fromUtf8("options02"))
+        self.options02.setVisible(False)
+
         self.formLayout_10 = QtGui.QFormLayout(self.options02)
         self.formLayout_10.setFieldGrowthPolicy(QtGui.QFormLayout.AllNonFixedFieldsGrow)
         self.formLayout_10.setObjectName(_fromUtf8("formLayout_10"))
@@ -1280,6 +1337,8 @@ class Ui_MainWindow(object):
 "border-radius:5;margin-top:10px;\n"
 "background-color: #4988af;"))
         self.var_start.setObjectName(_fromUtf8("var_start"))
+        self.var_start.clicked.connect(self.stepVoltage)
+
         self.formLayout_3.setWidget(6, QtGui.QFormLayout.FieldRole, self.var_start)
         self.voltage_input.addWidget(self.variable_voltage)
         self.verticalLayout.addWidget(self.voltage_input)
@@ -1321,6 +1380,8 @@ class Ui_MainWindow(object):
 "border-radius:5;margin-top:10px;\n"
 "background-color: #4988af;"))
         self.export_2.setObjectName(_fromUtf8("export_2"))
+        self.export_2.clicked.connect(self.file_open)
+
         self.gridLayout_2.addWidget(self.export_2, 0, 1, 1, 1)
         self.plot_graph = QtGui.QPushButton(self.Graph)
         self.plot_graph.setMaximumSize(QtCore.QSize(16777215, 16777215))
@@ -1329,6 +1390,8 @@ class Ui_MainWindow(object):
 "border-radius:5;margin-top:10px;\n"
 "background-color: #4988af;"))
         self.plot_graph.setObjectName(_fromUtf8("plot_graph"))
+        self.plot_graph.clicked.connect(self.plotGraph)
+
         self.gridLayout_2.addWidget(self.plot_graph, 0, 2, 1, 1)
         self.csv = QtGui.QPushButton(self.Graph)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Fixed)
@@ -1342,6 +1405,9 @@ class Ui_MainWindow(object):
 "background-color: #4988af;"))
         self.csv.setObjectName(_fromUtf8("csv"))
         self.gridLayout_2.addWidget(self.csv, 0, 0, 1, 1)
+
+        self.csv.clicked.connect(self.file_save)
+
         self.gridLayout_7.addLayout(self.gridLayout_2, 1, 1, 1, 1)
         spacerItem = QtGui.QSpacerItem(20, 40, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
         self.gridLayout_7.addItem(spacerItem, 2, 1, 1, 1)
@@ -1381,6 +1447,8 @@ class Ui_MainWindow(object):
         self.bgColor.setStyleSheet(_fromUtf8("border-radius: 5px;"))
         self.bgColor.setText(_fromUtf8(""))
         self.bgColor.setObjectName(_fromUtf8("bgColor"))
+        self.bgColor.clicked.connect(lambda : self.color_picker(1))
+
         self.gridLayout.addWidget(self.bgColor, 1, 3, 1, 1)
         self.lineEdit_18 = QtGui.QLineEdit(self.Graph)
         font = QtGui.QFont()
@@ -1425,6 +1493,8 @@ class Ui_MainWindow(object):
         self.lineColor.setStyleSheet(_fromUtf8("border-radius: 5px;"))
         self.lineColor.setText(_fromUtf8(""))
         self.lineColor.setObjectName(_fromUtf8("lineColor"))
+        self.lineColor.clicked.connect(lambda :self.color_picker(0))
+
         self.gridLayout.addWidget(self.lineColor, 1, 1, 1, 1)
         self.yAxis = QtGui.QComboBox(self.Graph)
         font = QtGui.QFont()
@@ -1621,8 +1691,9 @@ class Ui_MainWindow(object):
         MainWindow.setStatusBar(self.statusBar)
 
         self.retranslateUi(MainWindow)
-        self.stackedWidget.setCurrentIndex(2)
+        self.stackedWidget.setCurrentIndex(0)
         self.tabWidget.setCurrentIndex(0)
+
         self.voltage_input.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
         MainWindow.setTabOrder(self.Login, self.pwd)
@@ -1657,10 +1728,10 @@ class Ui_MainWindow(object):
 "<span style=\" font-size:12pt; color:#4988af;text-decoration: none;\">Forgot Password?</span></a></p></body></html>", None))
         self.label_10.setText(_translate("MainWindow", "<html><head/><body><p align=\"center\"><span style=\" font-size:48pt; color:#4988af;\">SIGN UP</span></p></body></html>", None))
         self.name.setPlaceholderText(_translate("MainWindow", "Name", None))
-        self.sign_usrname.setPlaceholderText(_translate("MainWindow", "e-Mail", None))
-        self.sign_pwd.setPlaceholderText(_translate("MainWindow", "Username", "efeswf"))
-        self.conf_pwd.setPlaceholderText(_translate("MainWindow", "Password", None))
-        self.noIdea.setPlaceholderText(_translate("MainWindow", "Confirm Password", None))
+        self.sign_usrname.setPlaceholderText(_translate("MainWindow", "Username", None))
+        self.sign_pwd.setPlaceholderText(_translate("MainWindow", "Password", "efeswf"))
+        self.conf_pwd.setPlaceholderText(_translate("MainWindow", "Confirm Password", None))
+        self.noIdea.setPlaceholderText(_translate("MainWindow", "e-Mail", None))
         self.Signup.setText(_translate("MainWindow", "SIGN UP", None))
         self.goToLogin.setText(_translate("MainWindow", "<html><head/><body><p><a href=\\\"whatever\\\">\n"
 "<span style=\" font-size:12pt; color:#4988af;text-decoration: none;\">Already a user? Sign in!</span></a></p></body></html>", None))
@@ -1739,6 +1810,247 @@ class Ui_MainWindow(object):
         self.arduino_start.setText(_translate("MainWindow", "START", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.Arduino), _translate("MainWindow", "LED", None))
 
+
+    def setSignupWindow(self,event):
+        self.stackedWidget.setCurrentIndex(1)
+
+    def setLoginWindow(self,event):
+        self.stackedWidget.setCurrentIndex(0)
+
+    def color_picker(self,b):
+        if b==0:
+            self.lcolor = QtGui.QColorDialog.getColor()
+            self.lcolor = self.lcolor.name()
+            self.lineColor.setStyleSheet("QWidget { background-color: %s}" % self.lcolor)
+        else:
+            self.bcolor = QtGui.QColorDialog.getColor()
+            self.bColor = self.bColor.name()
+            self.bgColor.setStyleSheet("QWidget { background-color: %s}" % self.bcolor)
+
+    def loginClicked(self):
+        userid = self.usrname.text()
+        password = self.pwd.text()
+        cursor = db.cursor()
+        stri = "select * from User where userid = \'" + str(userid) + "\' and password = \'" + str(password) + "\'"
+        cursor.execute(stri)
+        if cursor.fetchone() is not None:
+             self.showMessageBox(MainWindow, "Congrats \n You are Logged In", "Successful Login")
+             self.stackedWidget.setCurrentIndex(2)
+        else:
+             self.showMessageBox(MainWindow, "Please check your userid and password", "Login Error!")
+
+
+    def submitClicked(self):
+        name = str(self.name.text()).strip()
+        email = str(self.noIdea.text()).strip()
+        userid = str(self.sign_usrname.text()).strip()
+        password = str(self.sign_pwd.text()).strip()
+        cpassword = str(self.conf_pwd.text()).strip()
+        if name == "" or email == "" or userid == "" or password == "":
+            self.showMessageBox(MainWindow,"Please fill all the fields","Register Error!")
+        else:
+            cursor = db.cursor()
+            cursor.execute("select * from User where userid=\"" + userid + "\"")
+            if cursor.fetchone() is not None:
+                self.showMessageBox("Choose another userid","Register Error!")
+            else:
+                if password != cpassword:
+                    self.showMessageBox(MainWindow,"Passwords do not match","Register Error!")
+                else:
+                    cursor = db.cursor()
+                    try:
+                        value = "INSERT INTO User(userid,name,password,email) " \
+                                "VALUES(?,?,?,?)"
+                        args = (userid, name, password, email)
+                        cursor.execute(value, args)
+                        db.commit()
+                        self.showMessageBox(MainWindow,"Congrats \n You are successfully registered","Registration Successful")
+                        self.stackedWidget.setCurrentIndex(2)
+                    except Exception as e:
+                        print(e)
+                        db.rollback()
+
+
+    def startExperiment(self):
+        volt = self.voltageValue_2.text()
+        tm = self.duration_2.text()
+        self.valuesTable.setRowCount(0)
+        a,b,c = 0.5,20,1000
+        try:
+            a,b,c = float(self.compliance0.text()),float(self.voltrange0.text()),float(self.resrange0.text())
+        except:
+            a,b,c = 0.5,20,1000
+        try:
+            self.values,self.tim = send_constant.main(float(volt),float(tm),a,b,c)
+            self.tabWidget.setCurrentIndex(1)
+            for i in range(len(self.tim)):
+                self.valuesTable.insertRow(self.valuesTable.rowCount())
+                self.valuesTable.setItem(i, 0, QtGui.QTableWidgetItem(str(self.tim[i])))
+                for j in range(3):
+                    self.valuesTable.setItem(i,j+1,QtGui.QTableWidgetItem(str(self.values[i][j])))
+
+        except:
+            self.showMessageBox(MainWindow,"Values entered are in wrong format\nOr keithley is not working","Error!")
+
+    def stepVoltage(self):
+        start = self.voltageValue_3.text()
+        end = self.duration_3.text()
+        steps = self.lineEdit_3.text()
+        self.valuesTable.setRowCount(0)
+        a,b,c = 0.5,20,1000
+        try:
+            a,b,c = float(self.compliance0.text()),float(self.voltrange0.text()),float(self.resrange0.text())
+        except:
+            a,b,c = 0.5,20,1000
+        try:
+            self.values,self.tim = step_voltage.main(float(start),float(end),float(steps),a,b,c)
+            self.tabWidget.setCurrentIndex(1)
+            for i in range(len(self.tim)):
+                self.valuesTable.insertRow(self.valuesTable.rowCount())
+                self.valuesTable.setItem(i, 0, QtGui.QTableWidgetItem(str(self.tim[i])))
+                for j in range(3):
+                    self.valuesTable.setItem(i, j + 1, QtGui.QTableWidgetItem(str(self.values[i][j])))
+
+        except:
+            self.showMessageBox(MainWindow, "Values entered are in wrong format\nOr keithley is not working", "Error!")
+
+    def exportReadings(self):
+
+        self.win = QtGui.QMainWindow()
+        self.ui = ExportGUI.Ui_Mail()
+        self.ui.setupUi(self.win)
+        self.win.show()
+        self.ui.export_mail.clicked.connect(self.exporting)
+
+    def exporting(self,path_to,filename_to):
+        cur = db.cursor()
+        r = self.usrname.text()
+        if str(self.usrname.text()) == "":
+            r = self.sign_usrname.text()
+        cur.execute("select email from User where userid = '" + str(r) + "';")
+        p = str(cur.fetchone()[0])
+        print(p,str(self.ui.email.text()),path_to)
+        try:
+            export.export(p,str(self.ui.email.text()),str(self.ui.password.text()),path = path_to,filename = filename_to )
+
+            self.showMessageBox(self.win,"Mail was successfully sent","Success")
+            self.win.close()
+        except:
+            self.showMessageBox(self.win,"Please check your internet connection\n Enter correct values","Authentication Error!")
+
+            self.win.close()
+
+
+    def plotGraph(self):
+        self.tabWidget.setCurrentIndex(1)
+
+        y = str(self.yAxis.currentText())
+        x = str(self.xAxis.currentText())
+        b = self.tim
+        label_x = "Time"
+        volt, current, resistance = [], [], []
+        a = []
+        # if len(self.values) == 0 :
+        for tup in self.values:
+            volt.append(tup[0])
+            current.append(tup[1])
+            resistance.append(tup[2])
+
+        if y == "Voltage":
+            a = volt
+            label_y = "Voltage"
+        elif y == "Current":
+            a = current
+            label_y = "Current"
+        else:
+            a = resistance
+            label_y = "Resistance"
+
+        if x == "Voltage":
+            b = volt
+            label_x = "Voltage"
+        elif x == "Current":
+            b = current
+            label_x = "Current"
+        elif x == "Resistance":
+            b = resistance
+            label_x = "Resistance"
+        grid = False
+        if self.radioButton.isChecked() == True:
+            grid = True
+        plot.beauty_plot(b,a,label_x,label_y,self.bcolor,self.lcolor,grid)
+
+    def radioButtonFun(self,b):
+
+        if self.const_volt.isChecked() == True:
+            self.voltage_input.setCurrentIndex(0)
+
+        elif self.sine_volt.isChecked() == True:
+            self.voltage_input.setCurrentIndex(1)
+
+        elif self.var_volt.isChecked() == True:
+            self.voltage_input.setCurrentIndex(2)
+
+    def additionalOptions(self,b):
+        if self.addopt0.isChecked() == True:
+            self.options00.setVisible(True)
+        else:
+            self.options00.setVisible(False)
+        if self.addopt1.isChecked() == True:
+            self.options01.setVisible(True)
+        else:
+            self.options01.setVisible(False)
+        if self.addopt2.isChecked() == True:
+            self.options02.setVisible(True)
+        else:
+            self.options02.setVisible(False)
+
+    def ledOptions(self,b):
+
+        if b == 0:
+            if self.toggle_led0.isChecked() == True:
+                self.tabWidget.setTabEnabled(2,True)
+                self.tabWidget.setCurrentIndex(2)
+        elif b == 1:
+            if self.toggle_led1.isChecked() == True:
+                self.tabWidget.setTabEnabled(2, True)
+                self.tabWidget.setCurrentIndex(2)
+
+        else:
+            if self.toggle_led2.isChecked() == True:
+                self.tabWidget.setTabEnabled(2, True)
+                self.tabWidget.setCurrentIndex(2)
+
+    def file_save(self):
+        import ntpath,os
+        import download
+        location = QtGui.QFileDialog.getSaveFileName(MainWindow, 'Save File')
+        filename = ntpath.basename(location)
+        parent = os.path.dirname(location)
+        download.save(path = parent, file_name = filename,rows = self.values,time = self.tim)
+
+    def file_open(self):
+        import ntpath,os
+        import download
+        location = QtGui.QFileDialog.getOpenFileName(MainWindow, 'Save File')
+        filename = ntpath.basename(location)
+
+        self.win = QtGui.QMainWindow()
+        self.ui = ExportGUI.Ui_Mail()
+        self.ui.setupUi(self.win)
+        self.win.show()
+        self.ui.export_mail.clicked.connect(lambda: self.exporting(location,filename))
+
+
+    def showMessageBox(self,win,message,title):
+        msg = QtGui.QMessageBox(win)
+        msg.setText(message)
+        msg.setWindowTitle(title)
+        msg.setIcon(QtGui.QMessageBox.Information)
+        msg.exec_()
+
+
+
 import resources_rc
 
 if __name__ == "__main__":
@@ -1750,4 +2062,3 @@ if __name__ == "__main__":
     MainWindow.setWindowTitle("SOURCERER")
     MainWindow.show()
     sys.exit(app.exec_())
-
