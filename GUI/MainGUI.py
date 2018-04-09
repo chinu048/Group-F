@@ -1098,6 +1098,28 @@ class Ui_MainWindow(object):
         self.sine_voltage.setObjectName(_fromUtf8("sine_voltage"))
         self.formLayout_8 = QtGui.QFormLayout(self.sine_voltage)
         self.formLayout_8.setObjectName(_fromUtf8("formLayout_8"))
+
+        #ADDITIONAL FIELDS
+        self.sine_amp = QtGui.QLineEdit(self.sine_voltage)
+        font = QtGui.QFont()
+        font.setFamily(_fromUtf8("KacstTitleL"))
+        font.setPointSize(12)
+        self.sine_amp.setFont(font)
+        self.sine_amp.setStyleSheet(_fromUtf8("border-radius:15;padding-left:10px;"))
+        self.sine_amp.setObjectName(_fromUtf8("sine_amp"))
+        self.formLayout_8.setWidget(0, QtGui.QFormLayout.FieldRole, self.sine_amp)
+
+        self.sine_duration = QtGui.QLineEdit(self.sine_voltage)
+        font = QtGui.QFont()
+        font.setFamily(_fromUtf8("KacstTitleL"))
+        font.setPointSize(12)
+        self.sine_duration.setFont(font)
+        self.sine_duration.setStyleSheet(_fromUtf8("border-radius:15;padding-left:10px;"))
+        self.sine_duration.setObjectName(_fromUtf8("sine_duration"))
+        self.formLayout_8.setWidget(3, QtGui.QFormLayout.FieldRole, self.sine_duration)
+
+        #END ADDITIONAL FIELDS
+
         self.label_35 = QtGui.QLabel(self.sine_voltage)
         font = QtGui.QFont()
         font.setFamily(_fromUtf8("KacstTitleL"))
