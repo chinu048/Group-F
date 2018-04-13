@@ -1857,7 +1857,7 @@ class Ui_MainWindow(object):
             self.lineColor.setStyleSheet("QWidget { background-color: %s}" % self.lcolor)
         else:
             self.bcolor = QtGui.QColorDialog.getColor()
-            self.bColor = self.bColor.name()
+            self.bcolor = self.bcolor.name()
             self.bgColor.setStyleSheet("QWidget { background-color: %s}" % self.bcolor)
 
     def loginClicked(self):
@@ -1885,7 +1885,7 @@ class Ui_MainWindow(object):
             cursor = db.cursor()
             cursor.execute("select * from User where userid=\"" + userid + "\"")
             if cursor.fetchone() is not None:
-                self.showMessageBox("Choose another userid","Register Error!")
+                self.showMessageBox(MainWindow,"Choose another userid","Register Error!")
             else:
                 if password != cpassword:
                     self.showMessageBox(MainWindow,"Passwords do not match","Register Error!")
