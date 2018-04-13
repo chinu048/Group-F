@@ -1100,6 +1100,14 @@ class Ui_MainWindow(object):
         self.formLayout_8.setObjectName(_fromUtf8("formLayout_8"))
 
         #ADDITIONAL FIELDS
+        self.dur_exp = QtGui.QLabel(self.sine_voltage)
+        self.dur_exp.setObjectName(_fromUtf8("dur_exp"))
+        self.formLayout_8.setWidget(3, QtGui.QFormLayout.LabelRole, self.dur_exp)
+
+        self.amplitude = QtGui.QLabel(self.sine_voltage)
+        self.amplitude.setObjectName(_fromUtf8("amplitude"))
+        self.formLayout_8.setWidget(0, QtGui.QFormLayout.LabelRole, self.amplitude)
+
         self.sine_amp = QtGui.QLineEdit(self.sine_voltage)
         font = QtGui.QFont()
         font.setFamily(_fromUtf8("KacstTitleL"))
@@ -1820,6 +1828,9 @@ class Ui_MainWindow(object):
         self.label_41.setText(_translate("MainWindow", "X-End : ", None))
         self.label_33.setText(_translate("MainWindow", "Y-End : ", None))
         self.label_6.setText(_translate("MainWindow", "Title : ", None))
+        self.dur_exp.setText(_translate("MainWindow", "Duration of Experiment : ", None))
+        self.amplitude.setText(_translate("MainWindow", "Amplitude : ", None))
+
         self.radioButton.setText(_translate("MainWindow", "GRID", None))
         self.radioButton_2.setText(_translate("MainWindow", "NO GRID", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.Graph), _translate("MainWindow", "Graph", None))
