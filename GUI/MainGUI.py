@@ -16,6 +16,7 @@ import sqlite3
 import matplotlib.pyplot as plt
 import ExportGUI
 import export
+import arduino
 
 db = sqlite3.connect("SoftwareProject.db")
 cur = db.cursor()
@@ -1842,7 +1843,13 @@ class Ui_MainWindow(object):
         self.label_15.setText(_translate("MainWindow", "On Time : ", None))
         self.arduino_start.setText(_translate("MainWindow", "START", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.Arduino), _translate("MainWindow", "LED", None))
-
+        self.arduino_start.clicked.connect(self.ard_start)
+        
+    def ard_start(self):
+        ontime = int( self.lineEdit.text() )
+        offtime = int( self.lineEdit_2.text() )
+        duration = int( self.lineEdit_4.text() )*60
+        arduino.ard(ontime,offtime,duration)
 
     def setSignupWindow(self,event):
         self.stackedWidget.setCurrentIndex(1)
