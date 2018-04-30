@@ -9,14 +9,15 @@
 import send_constant
 import step_voltage
 import plot
-
+import mailing
 
 from PyQt4 import QtCore, QtGui
 import sqlite3
 import matplotlib.pyplot as plt
 import ExportGUI
 import export
-#import arduino
+import forgotPassword
+import arduino
 
 db = sqlite3.connect("SoftwareProject.db")
 cur = db.cursor()
@@ -673,6 +674,8 @@ class Ui_MainWindow(object):
         self.label_9 = QtGui.QLabel(self.login)
         self.label_9.setObjectName(_fromUtf8("label_9"))
         self.formLayout_5.setWidget(7, QtGui.QFormLayout.FieldRole, self.label_9)
+        self.label_9.mouseReleaseEvent = self.forgetPassword
+
         self.horizontalLayout_3.addLayout(self.formLayout_5)
         self.stackedWidget.addWidget(self.login)
         self.signup = QtGui.QWidget()
@@ -1773,7 +1776,7 @@ class Ui_MainWindow(object):
         self.label_17.setText(_translate("MainWindow", "Value : ", None))
         self.voltageValue_2.setPlaceholderText(_translate("MainWindow", "in Volts", None))
         self.label_18.setText(_translate("MainWindow", "Duration of Experiment : ", None))
-        self.duration_2.setPlaceholderText(_translate("MainWindow", "in Minutes", None))
+        self.duration_2.setPlaceholderText(_translate("MainWindow", "in Seconds", None))
         self.toggle_led0.setText(_translate("MainWindow", "Use LED", None))
         self.label_42.setText(_translate("MainWindow", "Compliance : ", None))
         self.label_43.setText(_translate("MainWindow", "Voltage Range : ", None))
@@ -1783,7 +1786,7 @@ class Ui_MainWindow(object):
         self.label_35.setText(_translate("MainWindow", "Initial Phase : ", None))
         self.sine_phase.setPlaceholderText(_translate("MainWindow", "in Volts", None))
         self.label_39.setText(_translate("MainWindow", "Frequency : ", None))
-        self.sine_frequency.setPlaceholderText(_translate("MainWindow", "in Minutes", None))
+        self.sine_frequency.setPlaceholderText(_translate("MainWindow", "in Seconds", None))
         self.toggle_led1.setText(_translate("MainWindow", "Use LED", None))
         self.addopt1.setText(_translate("MainWindow", "Additional Options", None))
         self.label_45.setText(_translate("MainWindow", "Compliance : ", None))
@@ -1836,7 +1839,7 @@ class Ui_MainWindow(object):
         self.radioButton_2.setText(_translate("MainWindow", "NO GRID", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.Graph), _translate("MainWindow", "Graph", None))
         self.label_2.setText(_translate("MainWindow", "Duration : ", None))
-        self.lineEdit_4.setPlaceholderText(_translate("MainWindow", "in Minutes", None))
+        self.lineEdit_4.setPlaceholderText(_translate("MainWindow", "in Seconds", None))
         self.lineEdit_2.setPlaceholderText(_translate("MainWindow", "in Seconds", None))
         self.lineEdit.setPlaceholderText(_translate("MainWindow", "in Seconds", None))
         self.label_16.setText(_translate("MainWindow", "Off Time : ", None))
@@ -1844,12 +1847,31 @@ class Ui_MainWindow(object):
         self.arduino_start.setText(_translate("MainWindow", "START", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.Arduino), _translate("MainWindow", "LED", None))
         self.arduino_start.clicked.connect(self.ard_start)
-        
+
+    def mailingpwd(self):
+        cur = db.cursor()
+        cur.execute("select userid,password,email from User where email = '" + str(self.ui.email.text()) + "'")
+        row = cur.fetchone()
+        try:
+            mailing.send_mail("sourcererkeithley@gmail.com", str(self.ui.email.text()),row)
+            self.showMessageBox(self.win, "Email send successfully", "Success")
+            self.win.close()
+        except:
+            self.showMessageBox(self.win, "Email is not valid or \nthere is no internet connection", "Error")
+            self.win.close()
+
+    def forgetPassword(self,event):
+        self.win = QtGui.QMainWindow()
+        self.ui = forgotPassword.Ui_MainWindow()
+        self.ui.setupUi(self.win)
+        self.win.show()
+        self.ui.recover_pwd.clicked.connect(self.mailingpwd)
+
     def ard_start(self):
         ontime = int( self.lineEdit.text() )
         offtime = int( self.lineEdit_2.text() )
         duration = int( self.lineEdit_4.text() )*60
-        #arduino.ard(ontime,offtime,duration)
+        arduino.ard(ontime,offtime,duration)
 
     def setSignupWindow(self,event):
         self.stackedWidget.setCurrentIndex(1)
