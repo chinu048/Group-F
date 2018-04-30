@@ -16,7 +16,7 @@ import sqlite3
 import matplotlib.pyplot as plt
 import ExportGUI
 import export
-import arduino
+#import arduino
 
 db = sqlite3.connect("SoftwareProject.db")
 cur = db.cursor()
@@ -1849,7 +1849,7 @@ class Ui_MainWindow(object):
         ontime = int( self.lineEdit.text() )
         offtime = int( self.lineEdit_2.text() )
         duration = int( self.lineEdit_4.text() )*60
-        arduino.ard(ontime,offtime,duration)
+        #arduino.ard(ontime,offtime,duration)
 
     def setSignupWindow(self,event):
         self.stackedWidget.setCurrentIndex(1)
