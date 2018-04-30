@@ -17,7 +17,6 @@ import matplotlib.pyplot as plt
 import ExportGUI
 import export
 import forgotPassword
-import arduino
 
 db = sqlite3.connect("SoftwareProject.db")
 cur = db.cursor()
@@ -1861,9 +1860,10 @@ class Ui_MainWindow(object):
         self.ui.recover_pwd.clicked.connect(self.mailingpwd)
 
     def ard_start(self):
-        ontime = int( self.lineEdit.text() )
-        offtime = int( self.lineEdit_2.text() )
-        duration = int( self.lineEdit_4.text() )*60
+        import arduino
+        ontime = int( self.lineEdit.text() )*1000
+        offtime = int( self.lineEdit_2.text() )*1000
+        duration = int( self.lineEdit_4.text() )*1000
         arduino.ard(ontime,offtime,duration)
 
     def setSignupWindow(self,event):
