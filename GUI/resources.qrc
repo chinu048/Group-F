@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/images">
+        <file>images/sourcemeter.png</file>
+        <file>images/checkbox.png</file>
+        <file>images/email.png</file>
+    </qresource>
+</RCC>
